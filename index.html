@@ -818,7 +818,6 @@ $(function() {
   if(location.protocol.slice(0,4) != "http" ||
      !location.hostname.match(/(?:www\.)?(?:illuminarepublications|sacredmusicproject)\.com/i)
     ) {
-    processUrl = "http://www.illuminarepublications.com/editor/process.php";
     processUrl = "http://localhost/gregoriophp/process.php";
     $("#pdfForm").attr("action",processUrl);
   }
