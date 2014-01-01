@@ -38,6 +38,11 @@ Toujours en tant que superutilisateur :
     cd /usr/share/fonts/gregoriophp/
     for f in *.zip ; do unzip $f ; done
 
+N.B. : cette dernière commande est faite pour aller vite : pour bien faire,
+il faudrait plutôt extraire les archives dans un dossier temporaire, et ne
+copier que les fichiers de polices dans le dossier des polices du système.
+Ceci est de rigueur sous windows.
+
 #### Accès au site à-travers le navigateur
 
 Dans votre navigateur (chrome ou chromium recommandé, mais firefox fonctionne),
