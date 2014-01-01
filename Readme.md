@@ -42,7 +42,7 @@ Toujours en tant que superutilisateur :
 
 Dans votre navigateur (chrome ou chromium recommandé, mais firefox fonctionne),
 saisissez l'adresse :
-[http://localhost/gregoriophp].
+http://localhost/gregoriophp/
 
 Adaptez les paramètres à vos besoins, saisissez votre partition (pourquoi pas
 par un copier-coller depuis [gregobase](http://gregobase.selapa.net/))
