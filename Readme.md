@@ -1,8 +1,8 @@
 # Gregoriophp
 
 Ce dépôt est un *fork* de [gregoriophp](https://code.google.com/p/gregoriophp/),
-adapté pour que la compilation des PDF se fasse en local, et non sur le
-serveur de [http://illuminarepublications.com/].
+adapté pour que la compilation des PDF se fasse en local, sans dépendre du
+serveur de http://illuminarepublications.com/.
 
 ## Installation
 
