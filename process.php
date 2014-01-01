@@ -1,4 +1,10 @@
 <?php
+// Suppression des fichiers temporaires vieux de plus de trois heures.
+// On laisse les plus récents, pour faciliter les débogages.
+$folder = new DirectoryIterator('tmp/');
+foreach($folder as $file)
+	if($file->isFile() && !$file->isDot() && (time() - $file->getMTime() > 10800))
+		unlink($file->getPathname());
 $font=$_REQUEST['font'];
 $size=$_REQUEST['fontsize'];
 $gabc=$_REQUEST['gabc'];
