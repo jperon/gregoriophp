@@ -26,6 +26,7 @@ En tant que superutilisateur, saisissez les commandes suivantes :
     cd /var/www/
     git clone https://github.com/jperon/gregoriophp.git
     cd gregoriophp/
+    mkdir tmp/
     chown -R www-data:www-data .
     chmod -R 755 .
 
