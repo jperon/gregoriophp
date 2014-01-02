@@ -163,6 +163,7 @@ if($gabc=='') {
         ),
         $annotation
       );
+      $annotation = "{\\rubrum $annotation}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotation);
         $annothelper = "\\fontsize{8}{8}\\selectfont{{$upperAnnot}$annotsuffix}";
@@ -187,6 +188,7 @@ if($gabc=='') {
         ),
         $annotationTwo
       );
+      $annotationTwo = "{\\rubrum $annotationTwo}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotationTwo);
         $annothelperTwo = "\\fontsize{8}{8}\\selectfont{{$upperAnnot}$annotsuffix}";
@@ -253,8 +255,9 @@ $sizeCmd
   fwrite($handle, <<<EOF
 \\documentclass[10pt]{article}
 $papercmd
-%\\usepackage{fullpage}
 \\usepackage{color}
+\\definecolor{rubrum}{rgb}{.6,0,0}
+\\def\\rubrum{\\color{rubrum}}
 \\usepackage{gregoriotex}
 \\usepackage[utf8]{luainputenc}
 \\usepackage{fontspec}
@@ -264,9 +267,8 @@ $usefont
 \\begin{document}
 $setmainfont%
 \\newfontfamily\\versiculum{Versiculum}
-%\\font\\versiculum=Versiculum-tlf-ly1 at 12pt
-%\\font\\garamondInitial=GaramondPremrPro-tlf-ly1 at 38pt
 \\gresetstafflinefactor{13}
+\\grecoloredlines{153}{0}{0}
 \\def\\greinitialformat#1{%
 $initialFormat
 
@@ -274,26 +276,28 @@ $initialFormat
 \\def\\dualcomment#1#2{%
   {\\fontsize{12}{12}\\selectfont %
   \\setlength{\\parindent}{0pt}%
-  \\vbox{\\textit{#1 \\hfill #2}}%
+  \\vbox{\\textit{\\rubrum #1 \\hfill #2}}%
   \\vspace{0.25em}%
   \\relax%
 }}
 \\def\\grestar{%
-  *%
+  {\\rubrum\\versiculum *}
   \\relax%
 }
 \\def\\Abar{%
-  {\\versiculum a}%
+  {\\rubrum\\versiculum a}%
   \\relax%
 }
 
-\\def\\Rbar{%
-  {\\versiculum r}%
+\\def\\Rbar#1{%
+  \\raisebox{-.4ex}{\\rubrum \\includegraphics[height=2ex]{Repons}}%
+  \\mbox{\\hspace{-.2ex}{\\rubrum#1}}%
   \\relax%
 }
 
-\\def\\Vbar{%
-  {\\versiculum v}%
+\\def\\Vbar#1{%
+  \\raisebox{-.4ex}{\\rubrum \\includegraphics[height=2ex]{Verset}}%
+  \\mbox{\\hspace{-.2ex}{\\rubrum#1}}%
   \\relax%
 }
 \\def\\gretranslationformat#1{%
@@ -350,7 +354,7 @@ EOF
 /////////////////////////////////////////////////////////////////////////
 
 // Run lualatex on it.
-  exec("export HOME=/var/www/gregoriophp/tmp && export TEXMFCNF=.: && lualatex -output-directory=tmp -interaction=batchmode $nametexS 2>&1", $lualatexOutput, $lualatexRetVal);
+  exec("export HOME=tmp && export TEXMFCNF=.: && TEXINPUTS='lib:' && lualatex -output-directory=tmp -interaction=batchmode $nametexS 2>&1", $lualatexOutput, $lualatexRetVal);
   if($lualatexRetVal){
     $result = array("file" => $nametex,
       "error" => implode("\n",$gregOutput) . "\n\n" . implode("\n",$lualatexOutput));
