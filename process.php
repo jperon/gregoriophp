@@ -35,10 +35,10 @@ if($_REQUEST['color']=='false'){
   $color=false;
 }
 if($width==''){
-  $width='5';
+  $width='148';
 }
 if($height==''){
-  $height='11';
+  $height='210';
 }
 ini_set('magic_quotes_runtime', 0);
 if($format=='eps') {
@@ -101,12 +101,12 @@ if($gabc=='') {
   }
   $finalpdfS = str_replace('\'','\\\'',$finalpdf);
   
-  $pwidth=$width+1;
+  $pwidth=$width+25;
   $papercmd="%\\usepackage{vmargin}
-%\\setpapersize{custom}{{$pwidth}in}{{$height}in}
-%\\setmargnohfrb{0.5in}{0.5in}{0.5in}{0.5in}
-\\usepackage[papersize={{$pwidth}in,{$height}in},margin=0.5in]{geometry}
-\\special{ pdf: pagesize width {$pwidth}truein height {$height}truein}";
+%\\setpapersize{custom}{{$pwidth}mm}{{$height}mm}
+%\\setmargnohfrb{12mm}{12mm}{12mm}{12mm}
+\\usepackage[papersize={{$pwidth}mm,{$height}mm},margin=12mm]{geometry}
+\\special{ pdf: pagesize width {$pwidth}truemm height {$height}truemm}";
   $includeScores = '';
   foreach($gabcs as $i => $gabc) {
     $theader = substr($gabc,0,strpos($gabc,'%%'));
@@ -274,7 +274,7 @@ $rubrum
 \\usepackage[utf8]{luainputenc}
 \\usepackage{fontspec}
 $usefont
-\\textwidth {$width}in
+\\textwidth {$width}mm
 \\pagestyle{empty}
 \\begin{document}
 $setmainfont%
