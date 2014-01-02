@@ -227,8 +227,8 @@ textarea,#chant-parent{
   <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Font: Sorts Mill Goudy</label>
   <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
   <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Spacing: Default</label>
-  <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width: 148 mm</label>
-  <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height: 210 mm</label>
+  <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width: A5</label>
+  <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height: A5</label>
   <input type="checkbox" id="cbCrop" checked /><label for="cbCrop">Crop</label>
   <input type="checkbox" id="cbColor" checked /><label for="cbColor">Color</label>
 </div>
@@ -240,15 +240,15 @@ textarea,#chant-parent{
   <input type="radio" name="rbSpacing" value="vichi" id="rbSpacingVichi"><label for="rbSpacingVichi">Vichi</label>
 </div>
 <div id="radioWidth" style="display:none;position:absolute">
-  <input type="radio" name="rbWidth" value="105" id="rbWidth4"/><label for="rbWidth4">105 mm</label>
-  <input type="radio" name="rbWidth" value="148" checked id="rbWidth45"/><label for="rbWidth45">148mm</label>
-  <input type="radio" name="rbWidth" value="210" id="rbWidth5"/><label for="rbWidth5">210 mm</label>
+  <input type="radio" name="rbWidth" value="81" id="rbWidth4"/><label for="rbWidth4">A6</label>
+  <input type="radio" name="rbWidth" value="124" checked id="rbWidth45"/><label for="rbWidth45">A5</label>
+  <input type="radio" name="rbWidth" value="186" id="rbWidth5"/><label for="rbWidth5">A4</label>
   <input type="radio" name="rbWidth" value="custom" id="rbWidthCustom"/><label for="rbWidthCustom"><input type="text" class='txtbox' size="3" id="txtWidth" value=""/><label for="txtWidth">mm</label></label>
 </div>
 <div id="radioHeight" style="display:none;position:absolute">
-  <input type="radio" name="rbHeight" value="148" id="rbHeight9"/><label for="rbHeight9">148 mm</label>
-  <input type="radio" name="rbHeight" value="210" checked id="rbHeight11"/><label for="rbHeight11">210 mm</label>
-  <input type="radio" name="rbHeight" value="297" id="rbHeight13"/><label for="rbHeight13">297 mm</label>
+  <input type="radio" name="rbHeight" value="148" id="rbHeight9"/><label for="rbHeight9">A6</label>
+  <input type="radio" name="rbHeight" value="210" checked id="rbHeight11"/><label for="rbHeight11">A5</label>
+  <input type="radio" name="rbHeight" value="297" id="rbHeight13"/><label for="rbHeight13">A4</label>
   <input type="radio" name="rbHeight" value="custom" id="rbHeightCustom"/><label for="rbHeightCustom"><input type="text" class='txtbox' size="3" id="txtHeight" value=""/><label for="txtWidth">mm</label></label>
 </div>
 <div class="tap"><textarea id="editor" spellcheck="false">user-notes:;&#10;commentary:;&#10;annotation:;&#10;centering-scheme:latin;&#10;%%&#10;(c4)</textarea></div>
@@ -282,7 +282,7 @@ textarea,#chant-parent{
 <script>
 gabcSettings.trimStaff=false;
 var gabcheader=null,
-    selHeight=210,selWidth=148,selSpacing='',selFont='LinLibertineO',selFontSize=12,
+    selHeight=210,selWidth=124,selSpacing='',selFont='LinLibertineO',selFontSize=12,
     overrideSpacing=false,
     overrideFont=false,
     overrideHeight=false,
@@ -313,17 +313,17 @@ function updateBoth(){
   if(gabcheader.cValues.width != selWidth) {
     val = parseFloat(gabcheader.cValues.width);
     switch(val){
-      case 105:
+      case 81:
         $("#rbWidth4")[0].checked = true;
         $("#rbWidth4").button("refresh");
         selWidth = val;
         break;
-      case 210:
+      case 186:
         $("#rbWidth5")[0].checked = true;
         $("#rbWidth5").button("refresh");
         selWidth = val;
         break;
-      case 148:
+      case 124:
         $("#rbWidth45")[0].checked = true;
         $("#rbWidth45").button("refresh");
         selWidth = val;
@@ -586,9 +586,9 @@ function docKeyDown(e){
 
 function widthChanged(width,forceUpdateGabc){
   var val = typeof(width)=="number"? width :
-    $("#rbWidth4")[0].checked? 105 :
-    $("#rbWidth5")[0].checked? 210 :
-    $("#rbWidth45")[0].checked? 148 :
+    $("#rbWidth4")[0].checked? 81 :
+    $("#rbWidth5")[0].checked? 186 :
+    $("#rbWidth45")[0].checked? 124 :
     parseFloat($("#txtWidth").val()) || 5;
   selWidth= val;
   gabcheader = gabcheader || getHeader($("#editor").val());

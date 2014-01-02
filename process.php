@@ -101,7 +101,7 @@ if($gabc=='') {
   }
   $finalpdfS = str_replace('\'','\\\'',$finalpdf);
   
-  $pwidth=$width+25;
+  $pwidth=$width+24;
   $papercmd="%\\usepackage{vmargin}
 %\\setpapersize{custom}{{$pwidth}mm}{{$height}mm}
 %\\setmargnohfrb{12mm}{12mm}{12mm}{12mm}
