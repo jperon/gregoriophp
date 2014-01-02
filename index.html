@@ -226,7 +226,7 @@ textarea,#chant-parent{
 <div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
   <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Font: Sorts Mill Goudy</label>
   <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
-  <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Spacing: Vichi</label>
+  <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Spacing: Default</label>
   <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width: 148 mm</label>
   <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height: 210 mm</label>
   <input type="checkbox" id="cbCrop" checked /><label for="cbCrop">Crop</label>
@@ -235,9 +235,9 @@ textarea,#chant-parent{
 <div id="radioFont" style="display:none;position:absolute;z-index:100000">
 </div>
 <div id="radioSpacing" style="display:none;position:absolute">
-  <input type="radio" name="rbSpacing" value="" id="rbSpacingDefault"><label for="rbSpacingDefault">Default</label>
+  <input type="radio" name="rbSpacing" value="" checked id="rbSpacingDefault"><label for="rbSpacingDefault">Default</label>
   <input type="radio" name="rbSpacing" value="smith" id="rbSpacingSmith"><label for="rbSpacingSmith">Smith</label>
-  <input type="radio" name="rbSpacing" value="vichi" checked id="rbSpacingVichi"><label for="rbSpacingVichi">Vichi</label>
+  <input type="radio" name="rbSpacing" value="vichi" id="rbSpacingVichi"><label for="rbSpacingVichi">Vichi</label>
 </div>
 <div id="radioWidth" style="display:none;position:absolute">
   <input type="radio" name="rbWidth" value="105" id="rbWidth4"/><label for="rbWidth4">105 mm</label>
@@ -273,8 +273,8 @@ textarea,#chant-parent{
 <input type="hidden" id="pdff_height" name="height"/>
 <input type="hidden" id="pdff_croppdf" name="croppdf"/>
 <input type="hidden" id="pdff_color" name="color"/>
-<input type="hidden" id="pdff_spacing" value="vichi" name="spacing"/>
-<input type="hidden" id="pdff_font" value="OFLSortsMillGoudy" name="font"/>
+<input type="hidden" id="pdff_spacing" value="" name="spacing"/>
+<input type="hidden" id="pdff_font" value="LinLibertineO" name="font"/>
 <input type="hidden" id="pdff_fontsize" value="12" name="fontsize"/>
 <input type="hidden" id="pdff_fmt" name="fmt" value="pdf"/>
 </form>
@@ -282,7 +282,7 @@ textarea,#chant-parent{
 <script>
 gabcSettings.trimStaff=false;
 var gabcheader=null,
-    selHeight=210,selWidth=148,selSpacing='vichi',selFont='LinLibertineO',selFontSize=12,
+    selHeight=210,selWidth=148,selSpacing='',selFont='LinLibertineO',selFontSize=12,
     overrideSpacing=false,
     overrideFont=false,
     overrideHeight=false,
