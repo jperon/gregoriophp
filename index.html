@@ -224,12 +224,13 @@ textarea,#chant-parent{
 <div class='body'>
 <img alt="Illuminare Score Editor" src="logo.png" height="27" width="288" style="max-width:3in;display:block;margin:0.5em 0 0.75em"/>
 <div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
-  <input type="checkbox" id="cbCrop" checked /><label for="cbCrop">Crop PDF</label>
+  <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Font: Sorts Mill Goudy</label>
+  <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
   <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Spacing: Vichi</label>
   <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width: 4.5in</label>
   <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height: 11in</label>
-  <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Font: Sorts Mill Goudy</label>
-  <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+  <input type="checkbox" id="cbCrop" checked /><label for="cbCrop">Crop</label>
+  <input type="checkbox" id="cbColor" checked /><label for="cbColor">Color</label>
 </div>
 <div id="radioFont" style="display:none;position:absolute;z-index:100000">
 </div>
@@ -270,6 +271,7 @@ textarea,#chant-parent{
 <input type="hidden" id="pdff_width" name="width"/>
 <input type="hidden" id="pdff_height" name="height"/>
 <input type="hidden" id="pdff_croppdf" name="croppdf"/>
+<input type="hidden" id="pdff_color" name="color"/>
 <input type="hidden" id="pdff_spacing" value="vichi" name="spacing"/>
 <input type="hidden" id="pdff_font" value="OFLSortsMillGoudy" name="font"/>
 <input type="hidden" id="pdff_fontsize" value="12" name="fontsize"/>
@@ -490,6 +492,7 @@ GabcJob.prototype.run = function(){
     filename:this.filename,
     guid:this.guid || '',
     croppdf:$("#cbCrop")[0].checked,
+    color:$("#cbColor")[0].checked,
     width:this.header.cValues.width || selWidth,
     height:this.header.cValues.height || selHeight,
     spacing:typeof(this.header.cValues.spacing)=='string'? this.header.cValues.spacing : selSpacing,
@@ -619,6 +622,13 @@ function cropChanged(){
   var checked=this.checked;
   $("#imgf_croppdf").val(checked);
   $("#pdff_croppdf").val(checked);
+  $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
+}
+
+function colorChanged(){
+  var checked=this.checked;
+  $("#imgf_color").val(checked);
+  $("#pdff_color").val(checked);
   $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
 }
 
@@ -811,6 +821,7 @@ $(function() {
   }
 
   $("#cbCrop").button({icons:{primary: "ui-icon-check"}});
+  $("#cbColor").button({icons:{primary: "ui-icon-check"}});
   $("#radioSpacing,#radioWidth,#radioHeight").buttonset();
   $("#radioFont").buttonsetv();
   $("#btnSpacing,#btnFont,#btnFontSize,#btnWidth,#btnHeight").button({create:windowResized});
@@ -829,6 +840,7 @@ $(function() {
   $("#txtWidth").keyup(widthChanged);
   $("#txtHeight").keyup(heightChanged);
   $("#cbCrop").change(cropChanged);
+  $("#cbColor").change(colorChanged);
   $("#btnSpacing,#btnFont,#btnWidth,#btnHeight,#lblSpacing,#lblFont,#lblWidth,#lblHeight").mouseenter(showRadio).mouseleave(hideRadio).change(overrideChanged);
   $("#btnFontSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFontSize').focus()});
   $("#txtFontSize").keyup(fontSizeKeyUp).keyup();
@@ -872,6 +884,11 @@ $(function() {
     var crop = parseInt($.QueryString.crop);
     if(isNaN(crop)) crop = $.QueryString.crop;
     $('#cbCrop').prop('checked',crop).button('refresh').change();
+  }
+  if($.QueryString.color) {
+    var color = parseInt($.QueryString.color);
+    if(isNaN(color)) color = $.QueryString.color;
+    $('#cbColor').prop('checked',color).button('refresh').change();
   }
   if($.QueryString.width) {
     widthChanged(parseFloat($.QueryString.width),true);

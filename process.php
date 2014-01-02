@@ -16,6 +16,7 @@ $height=$_REQUEST['height'];
 $spacing=$_REQUEST['spacing'];
 $save=$_REQUEST['save'];
 $croppdf=true;
+$color=true;
 if($size) {
   $sizeCmd = "\\fontsize{{$size}}{{$size}}\\selectfont";
 } else {
@@ -29,6 +30,9 @@ if($font == 'palatino') {
 //}
 if($_REQUEST['croppdf']=='false'){
   $croppdf=false;
+}
+if($_REQUEST['color']=='false'){
+  $color=false;
 }
 if($width==''){
   $width='5';
@@ -251,12 +255,19 @@ $sizeCmd
     $setmainfont = "\\setmainfont{{$font}}";
     $usefont = '';
   }
+  if($color) {
+    $rubrum = "\\definecolor{rubrum}{rgb}{.6,0,0}";
+    $coloredlines = "\\grecoloredlines{153}{0}{0}";
+  } else {
+    $rubrum = "\\definecolor{rubrum}{rgb}{0,0,0}";
+    $coloredlines = "";
+  }
   $handle = fopen($nametex, 'w');
   fwrite($handle, <<<EOF
 \\documentclass[10pt]{article}
 $papercmd
 \\usepackage{color}
-\\definecolor{rubrum}{rgb}{.6,0,0}
+$rubrum
 \\def\\rubrum{\\color{rubrum}}
 \\usepackage{gregoriotex}
 \\usepackage[utf8]{luainputenc}
@@ -268,7 +279,7 @@ $usefont
 $setmainfont%
 \\newfontfamily\\versiculum{Versiculum}
 \\gresetstafflinefactor{13}
-\\grecoloredlines{153}{0}{0}
+$coloredlines
 \\def\\greinitialformat#1{%
 $initialFormat
 
