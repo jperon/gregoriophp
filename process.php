@@ -266,7 +266,8 @@ $sizeCmd
   fwrite($handle, <<<EOF
 \\documentclass[10pt]{article}
 $papercmd
-\\usepackage{color}
+\\usepackage{xcolor}
+\\usepackage{graphicx}
 $rubrum
 \\def\\rubrum{\\color{rubrum}}
 \\usepackage{gregoriotex}
@@ -291,26 +292,41 @@ $initialFormat
   \\vspace{0.25em}%
   \\relax%
 }}
-\\def\\grestar{%
-  {\\rubrum\\versiculum *}
-  \\relax%
+\\def\\*{\\raisebox{.5ex}[0pt][0pt]{%
+        \\rubrum\\includegraphics[width=.9ex]{Asterisque}}%
 }
+\\let\\grestar\\*
+
 \\def\\Abar{%
   {\\rubrum\\versiculum a}%
   \\relax%
 }
 
-\\def\\Rbar#1{%
+\\def\\Rbar{%
+  \\raisebox{-.4ex}{\\rubrum \\includegraphics[height=2ex]{Repons}}%
+  \\relax%
+}
+\\catcode`\\℟=\\active \\def ℟#1{%
   \\raisebox{-.4ex}{\\rubrum \\includegraphics[height=2ex]{Repons}}%
   \\mbox{\\hspace{-.2ex}{\\rubrum#1}}%
-  \\relax%
 }
 
-\\def\\Vbar#1{%
+\\def\\Vbar{%
   \\raisebox{-.4ex}{\\rubrum \\includegraphics[height=2ex]{Verset}}%
-  \\mbox{\\hspace{-.2ex}{\\rubrum#1}}%
   \\relax%
 }
+\\catcode`\\℣=\\active \\def ℣#1{%
+  \\raisebox{-.4ex}{\\rubrum \\includegraphics[height=2ex]{Verset}}%
+  \\mbox{\\hspace{-.2ex}{\\rubrum#1}}%
+}
+
+\\catcode`\\✠=\\active \\def ✠{\\raisebox{-.1ex}[0pt][0pt]{%
+        \\rubrum\\includegraphics[height=1.6ex]{Crux}}}
+
+\\catcode`\\†=\\active \\def †{\\raisebox{-.4ex}[0pt][0pt]{%
+        \\rubrum\\includegraphics[height=2.2ex]{Dague}}}
+\\def\\gredagger{†}
+
 \\def\\gretranslationformat#1{%
   \\fontsize{10}{10}\\selectfont\\it{#1}%
   \\relax %
@@ -365,7 +381,7 @@ EOF
 /////////////////////////////////////////////////////////////////////////
 
 // Run lualatex on it.
-  exec("export HOME=tmp && export TEXMFCNF=.: && TEXINPUTS='lib:' && lualatex -output-directory=tmp -interaction=batchmode $nametexS 2>&1", $lualatexOutput, $lualatexRetVal);
+  exec("export HOME=tmp && export TEXMFCNF=.: && export TEXINPUTS=lib: && lualatex -output-directory=tmp -interaction=batchmode $nametexS 2>&1", $lualatexOutput, $lualatexRetVal);
   if($lualatexRetVal){
     $result = array("file" => $nametex,
       "error" => implode("\n",$gregOutput) . "\n\n" . implode("\n",$lualatexOutput));
