@@ -7,6 +7,7 @@ foreach($folder as $file)
 		unlink($file->getPathname());
 $font=$_REQUEST['font'];
 $size=$_REQUEST['fontsize'];
+$factor=$_REQUEST['factor'];
 $gabc=$_REQUEST['gabc'];
 $guid=$_REQUEST['guid'];
 $filename=$_REQUEST['filename'];
@@ -21,6 +22,11 @@ if($size) {
   $sizeCmd = "\\fontsize{{$size}}{{$size}}\\selectfont";
 } else {
   $sizeCmd = '\\large';
+}
+if($factor) {
+  $grefactorCmd = "\\setgrefactor{{$factor}}";
+} else {
+  $grefactorCmd = "\\setgrefactor{17}";
 }
 $initialFormat = '{\\fontsize{36}{36}\\selectfont #1}}';
 if($font == 'palatino') {
@@ -226,7 +232,8 @@ if($gabc=='') {
     
     $includeScores .= "$titlecmd
 $commentcmd
-\\setgrefactor{17}
+$grefactorCmd
+%\\setgrefactor{17}
 $spacingcmd
 $annotcmd
 \\gretranslationheight = 0.1904in

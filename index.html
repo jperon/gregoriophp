@@ -226,6 +226,7 @@ textarea,#chant-parent{
 <div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
   <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Font: Sorts Mill Goudy</label>
   <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+  <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
   <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Spacing: Default</label>
   <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width: A5</label>
   <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height: A5</label>
@@ -276,13 +277,14 @@ textarea,#chant-parent{
 <input type="hidden" id="pdff_spacing" value="" name="spacing"/>
 <input type="hidden" id="pdff_font" value="LinLibertineO" name="font"/>
 <input type="hidden" id="pdff_fontsize" value="12" name="fontsize"/>
+<input type="hidden" id="pdff_factor" value="17" name="factor"/>
 <input type="hidden" id="pdff_fmt" name="fmt" value="pdf"/>
 </form>
 <div id="overlay" style="display:none;"></div>
 <script>
 gabcSettings.trimStaff=false;
 var gabcheader=null,
-    selHeight=210,selWidth=124,selSpacing='',selFont='LinLibertineO',selFontSize=12,
+    selHeight=210,selWidth=124,selSpacing='',selFont='LinLibertineO',selFontSize=12,selFactor=17,
     overrideSpacing=false,
     overrideFont=false,
     overrideHeight=false,
@@ -299,6 +301,7 @@ function updateBoth(){
     if(!gabcheader.cValues.height) gabcheader.cValues.height = selHeight;
     if(typeof(gabcheader.cValues.spacing)!='string') gabcheader.cValues.spacing = selSpacing;
     if(typeof(gabcheader.cValues.font)!='string') gabcheader.cValues.font = selFontSize;
+    if(typeof(gabcheader.cValues.factor)!='string') gabcheader.cValues.factor = selFactor;
     var oLen = gabcheader.original.length;
     var header = gabcheader.toString();
     var nLen = header.length;
@@ -400,6 +403,10 @@ function updateBoth(){
   if(typeof(gabcheader.cValues.fontsize)=='string' && gabcheader.cValues.fontsize != selFontSize && parseFloat(gabcheader.cValues.fontsize)) {
     selFontSize = gabcheader.cValues.fontsize;
     $("#txtFontSize,#imgf_fontsize,#pdff_fontsize").val(selFontSize);
+  }
+  if(typeof(gabcheader.cValues.factor)=='string' && gabcheader.cValues.factor != selFactor && parseFloat(gabcheader.cValues.factor)) {
+    selFactor = gabcheader.cValues.factor;
+    $("#txtFactor,#imgf_factor,#pdff_factor").val(selFactor);
   }
   updateLocalHeader(gabcheader);
 }
@@ -504,6 +511,7 @@ GabcJob.prototype.run = function(){
     spacing:typeof(this.header.cValues.spacing)=='string'? this.header.cValues.spacing : selSpacing,
     font:typeof(this.header.cValues.font)=='string'? this.header.cValues.font : selFont,
     fontsize:typeof(this.header.cValues.fontsize)=='string'? this.header.cValues.fontsize : selFont,
+    factor:typeof(this.header.cValues.factor)=='string'? this.header.cValues.factor : selFont,
     save:true
   };
   $.post(processUrl,vars)
@@ -704,6 +712,16 @@ function fontSizeKeyUp(e) {
   $("#imgf_fontsize,#pdff_fontsize").val(selFontSize);
 }
 
+function factorKeyUp(e) {
+  var val = selFactor = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.factor != val){
+    gabcheader.cValues.factor = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_fontsize,#pdff_factor").val(selFactor);
+}
+
 function hideImage(){
   $("#overlay,#chant-image").hide();
 }
@@ -831,7 +849,7 @@ $(function() {
   $("#cbColor").button({icons:{primary: "ui-icon-check"}});
   $("#radioSpacing,#radioWidth,#radioHeight").buttonset();
   $("#radioFont").buttonsetv();
-  $("#btnSpacing,#btnFont,#btnFontSize,#btnWidth,#btnHeight").button({create:windowResized});
+  $("#btnSpacing,#btnFont,#btnFontSize,#btnFactor,#btnWidth,#btnHeight").button({create:windowResized});
   $("#chant-parent2").resizable({handles:"e"});
   if(location.protocol.slice(0,4) != "http" ||
      !location.hostname.match(/(?:www\.)?(?:illuminarepublications|sacredmusicproject)\.com/i)
@@ -850,7 +868,9 @@ $(function() {
   $("#cbColor").change(colorChanged);
   $("#btnSpacing,#btnFont,#btnWidth,#btnHeight,#lblSpacing,#lblFont,#lblWidth,#lblHeight").mouseenter(showRadio).mouseleave(hideRadio).change(overrideChanged);
   $("#btnFontSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFontSize').focus()});
+  $("#btnFactor").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFactor').focus()});
   $("#txtFontSize").keyup(fontSizeKeyUp).keyup();
+  $("#txtFactor").keyup(factorKeyUp).keyup();
   $("#radioSpacing,#radioFont,#radioWidth,#radioHeight").mouseenter(dontAllowHide).mouseleave(allowHide);
   $("input[name=rbFont]").change(fontChanged);
   $("input[name=rbSpacing]").change(spacingChanged);
