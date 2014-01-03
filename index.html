@@ -225,7 +225,7 @@ textarea,#chant-parent{
 <img alt="Illuminare Score Editor" src="logo.png" height="27" width="288" style="max-width:3in;display:block;margin:0.5em 0 0.75em"/>
 <div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
   Font :
-  <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Sorts Mill Goudy</label>
+  <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Libertine</label>
   <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
   <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
   <br>
@@ -409,7 +409,7 @@ function updateBoth(){
       $font[0].checked = true;
       $("#rbFont" + selFont).button('refresh');
     } else if(!FontFamilies[selFont]) {
-      selFont = 'OFLSortsMillGoudy';
+      selFont = 'LinLibertineO';
     }
     fontChanged(selFont);
   }
@@ -709,7 +709,7 @@ function fontChanged(font,forceUpdateGabc){
 
 function setFontLabel(){
   var cb = $("input[type=radio][value=" + selFont + "]")[0];
-  $("#btnFont").button("option","label","Font: <span class='" + fontclass + "'>" + (overrideFont?'<b>':'') + $("label[for="+cb.id+"]").text() + (overrideFont?'</b>':'') + '</span>');
+  $("#btnFont").button("option","label","<span class='" + fontclass + "'>" + (overrideFont?'<b>':'') + $("label[for="+cb.id+"]").text() + (overrideFont?'</b>':'') + '</span>');
 }
 
 function spacingChanged(spacing,forceUpdateGabc){
