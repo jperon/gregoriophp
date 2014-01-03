@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<!-- 
+<!--
 font-family: 'Sorts Mill Goudy', serif;
 font-family: 'Fanwood', serif;
 font-family: 'Crimson', serif;
@@ -93,7 +93,7 @@ font-family: 'Cardo', serif;
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <link href='css/OflSortsMillGoudyTT.css' rel='stylesheet' type='text/css'>
-<link type="text/css" href="css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />	
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/jquery-ui-1.8.16.custom.min.js"></script>
 <script src="jgabc.js"></script>
@@ -224,14 +224,24 @@ textarea,#chant-parent{
 <div class='body'>
 <img alt="Illuminare Score Editor" src="logo.png" height="27" width="288" style="max-width:3in;display:block;margin:0.5em 0 0.75em"/>
 <div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
-  <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Font: Sorts Mill Goudy</label>
+  Font :
+  <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Sorts Mill Goudy</label>
   <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
   <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
-  <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Spacing: Default</label>
+  <br>
+  Paper :
   <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width: A5</label>
   <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height: A5</label>
   <input type="checkbox" id="cbCrop" checked /><label for="cbCrop">Crop</label>
-  <input type="checkbox" id="cbColor" checked /><label for="cbColor">Color</label>
+  <br>
+  Color :
+  <input type="checkbox" id="cbColorLines" checked /><label for="cbColorLines">Lines</label>
+  <input type="checkbox" id="cbColorSym" checked /><label for="cbColorSym">Symbols</label>
+  <input type="checkbox" id="cbColorAnn" checked /><label for="cbColorAnn">Annotations</label>
+  <input type="checkbox" id="cbColorCom" checked /><label for="cbColorCom">Comments</label>
+  <br>
+  Spacing :
+  <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Default</label>
 </div>
 <div id="radioFont" style="display:none;position:absolute;z-index:100000">
 </div>
@@ -273,7 +283,10 @@ textarea,#chant-parent{
 <input type="hidden" id="pdff_width" name="width"/>
 <input type="hidden" id="pdff_height" name="height"/>
 <input type="hidden" id="pdff_croppdf" name="croppdf"/>
-<input type="hidden" id="pdff_color" name="color"/>
+<input type="hidden" id="pdff_colorlines" name="colorlines"/>
+<input type="hidden" id="pdff_colorsym" name="colorsym"/>
+<input type="hidden" id="pdff_colorann" name="colorann"/>
+<input type="hidden" id="pdff_colorcom" name="colorcom"/>
 <input type="hidden" id="pdff_spacing" value="" name="spacing"/>
 <input type="hidden" id="pdff_font" value="LinLibertineO" name="font"/>
 <input type="hidden" id="pdff_fontsize" value="12" name="fontsize"/>
@@ -312,7 +325,7 @@ function updateBoth(){
       $editor[0].selectionStart = selStart -oLen +nLen;
       $editor[0].selectionEnd = selEnd -oLen +nLen;
     }
-  } 
+  }
   if(gabcheader.cValues.width != selWidth) {
     val = parseFloat(gabcheader.cValues.width);
     switch(val){
@@ -505,7 +518,10 @@ GabcJob.prototype.run = function(){
     filename:this.filename,
     guid:this.guid || '',
     croppdf:$("#cbCrop")[0].checked,
-    color:$("#cbColor")[0].checked,
+    colorlines:$("#cbColorLines")[0].checked,
+    colorsym:$("#cbColorSym")[0].checked,
+    colorann:$("#cbColorAnn")[0].checked,
+    colorcom:$("#cbColorCom")[0].checked,
     width:this.header.cValues.width || selWidth,
     height:this.header.cValues.height || selHeight,
     spacing:typeof(this.header.cValues.spacing)=='string'? this.header.cValues.spacing : selSpacing,
@@ -640,10 +656,31 @@ function cropChanged(){
   $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
 }
 
-function colorChanged(){
+function colorlinesChanged(){
   var checked=this.checked;
-  $("#imgf_color").val(checked);
-  $("#pdff_color").val(checked);
+  $("#imgf_colorlines").val(checked);
+  $("#pdff_colorlines").val(checked);
+  $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
+}
+
+function colorsymChanged(){
+  var checked=this.checked;
+  $("#imgf_colorsym").val(checked);
+  $("#pdff_colorsym").val(checked);
+  $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
+}
+
+function colorannChanged(){
+  var checked=this.checked;
+  $("#imgf_colorann").val(checked);
+  $("#pdff_colorann").val(checked);
+  $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
+}
+
+function colorcomChanged(){
+  var checked=this.checked;
+  $("#imgf_colorcom").val(checked);
+  $("#pdff_colorcom").val(checked);
   $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
 }
 
@@ -699,7 +736,7 @@ function spacingChanged(spacing,forceUpdateGabc){
 
 function setSpacingLabel(){
   var cb = $("input[type=radio][value=" + selSpacing + "]")[0];
-  $("#btnSpacing").button("option","label","Spacing: " + (overrideSpacing?'<b>':'') + $("label[for="+cb.id+"]").text() + (overrideSpacing?'</b>':''));
+  $("#btnSpacing").button("option","label","" + (overrideSpacing?'<b>':'') + $("label[for="+cb.id+"]").text() + (overrideSpacing?'</b>':''));
 }
 
 function fontSizeKeyUp(e) {
@@ -846,7 +883,10 @@ $(function() {
   }
 
   $("#cbCrop").button({icons:{primary: "ui-icon-check"}});
-  $("#cbColor").button({icons:{primary: "ui-icon-check"}});
+  $("#cbColorLines").button({icons:{primary: "ui-icon-check"}});
+  $("#cbColorSym").button({icons:{primary: "ui-icon-check"}});
+  $("#cbColorAnn").button({icons:{primary: "ui-icon-check"}});
+  $("#cbColorCom").button({icons:{primary: "ui-icon-check"}});
   $("#radioSpacing,#radioWidth,#radioHeight").buttonset();
   $("#radioFont").buttonsetv();
   $("#btnSpacing,#btnFont,#btnFontSize,#btnFactor,#btnWidth,#btnHeight").button({create:windowResized});
@@ -857,7 +897,7 @@ $(function() {
     processUrl = "http://localhost/gregoriophp/process.php";
     $("#pdfForm").attr("action",processUrl);
   }
-  
+
   $(window).resize(windowResized);
   $("#lnkGregorioPDF").click(callGregorioPdf);
   $("#lnkGregorioEPS").click(callGregorioEps);
@@ -865,7 +905,10 @@ $(function() {
   $("#txtWidth").keyup(widthChanged);
   $("#txtHeight").keyup(heightChanged);
   $("#cbCrop").change(cropChanged);
-  $("#cbColor").change(colorChanged);
+  $("#cbColorLines").change(colorlinesChanged);
+  $("#cbColorSym").change(colorsymChanged);
+  $("#cbColorAnn").change(colorannChanged);
+  $("#cbColorCom").change(colorcomChanged);
   $("#btnSpacing,#btnFont,#btnWidth,#btnHeight,#lblSpacing,#lblFont,#lblWidth,#lblHeight").mouseenter(showRadio).mouseleave(hideRadio).change(overrideChanged);
   $("#btnFontSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFontSize').focus()});
   $("#btnFactor").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFactor').focus()});
@@ -912,10 +955,25 @@ $(function() {
     if(isNaN(crop)) crop = $.QueryString.crop;
     $('#cbCrop').prop('checked',crop).button('refresh').change();
   }
-  if($.QueryString.color) {
-    var color = parseInt($.QueryString.color);
-    if(isNaN(color)) color = $.QueryString.color;
-    $('#cbColor').prop('checked',color).button('refresh').change();
+  if($.QueryString.colorlines) {
+    var colorlines = parseInt($.QueryString.colorlines);
+    if(isNaN(colorlines)) colorlines = $.QueryString.colorlines;
+    $('#cbColorLines').prop('checked',colorlines).button('refresh').change();
+  }
+  if($.QueryString.colorsym) {
+    var colorsym = parseInt($.QueryString.colorsym);
+    if(isNaN(colorsym)) colorsym = $.QueryString.colorsym;
+    $('#cbColorSym').prop('checked',colorsym).button('refresh').change();
+  }
+  if($.QueryString.colorann) {
+    var colorann = parseInt($.QueryString.colorann);
+    if(isNaN(colorann)) colorann = $.QueryString.colorann;
+    $('#cbColorAnn').prop('checked',colorann).button('refresh').change();
+  }
+  if($.QueryString.colorcom) {
+    var colorcom = parseInt($.QueryString.colorcom);
+    if(isNaN(colorcom)) colorcom = $.QueryString.colorcom;
+    $('#cbColorCom').prop('checked',colorcom).button('refresh').change();
   }
   if($.QueryString.width) {
     widthChanged(parseFloat($.QueryString.width),true);

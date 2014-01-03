@@ -17,7 +17,10 @@ $height=$_REQUEST['height'];
 $spacing=$_REQUEST['spacing'];
 $save=$_REQUEST['save'];
 $croppdf=true;
-$color=true;
+$colorlines=true;
+$colorsym=true;
+$colorann=true;
+$colorcom=true;
 if($size) {
   $sizeCmd = "\\fontsize{{$size}}{{$size}}\\selectfont";
 } else {
@@ -37,8 +40,17 @@ if($font == 'palatino') {
 if($_REQUEST['croppdf']=='false'){
   $croppdf=false;
 }
-if($_REQUEST['color']=='false'){
-  $color=false;
+if($_REQUEST['colorlines']=='false'){
+  $colorlines=false;
+}
+if($_REQUEST['colorsym']=='false'){
+  $colorsym=false;
+}
+if($_REQUEST['colorann']=='false'){
+  $colorann=false;
+}
+if($_REQUEST['colorcom']=='false'){
+  $colorcom=false;
 }
 if($width==''){
   $width='148';
@@ -77,7 +89,7 @@ if($gabc=='') {
   } else {
     $gabcs = Array($gabc);
   }
-  
+
   $dir = 'tmp';
   $ofilename = uniqid('gregorio',true);
   $tmpfname = "tmp/$ofilename";
@@ -99,14 +111,14 @@ if($gabc=='') {
   $namepdfS = str_replace('\'','\\\'',$namepdf);
   $namelogS = str_replace('\'','\\\'',$namelog);
   $nameauxS = str_replace('\'','\\\'',$nameaux);
-  
+
   if($format=='eps'){
     $finalpdf = "$dir/$ofilename.eps";
   } else {
     $finalpdf = "$dir/$ofilename.pdf";
   }
   $finalpdfS = str_replace('\'','\\\'',$finalpdf);
-  
+
   $pwidth=$width+24;
   $papercmd="%\\usepackage{vmargin}
 %\\setpapersize{custom}{{$pwidth}mm}{{$height}mm}
@@ -173,7 +185,7 @@ if($gabc=='') {
         ),
         $annotation
       );
-      $annotation = "{\\rubrum $annotation}";
+      $annotation = "{\\rubrumann $annotation}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotation);
         $annothelper = "\\fontsize{8}{8}\\selectfont{{$upperAnnot}$annotsuffix}";
@@ -198,7 +210,7 @@ if($gabc=='') {
         ),
         $annotationTwo
       );
-      $annotationTwo = "{\\rubrum $annotationTwo}";
+      $annotationTwo = "{\\rubrumann $annotationTwo}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotationTwo);
         $annothelperTwo = "\\fontsize{8}{8}\\selectfont{{$upperAnnot}$annotsuffix}";
@@ -228,8 +240,8 @@ if($gabc=='') {
     }
     fwrite($handle, "\xEF\xBB\xBF$gabc");
     fclose($handle);
-    
-    
+
+
     $includeScores .= "$titlecmd
 $commentcmd
 $grefactorCmd
@@ -252,7 +264,7 @@ $sizeCmd
       return;
     }
   }
-  
+
 /////////////////////////////////////////////////////////////////////////////
 // Write out a template main.tex file that includes the score just outputted.
   if($font == 'times' || $font == 'palatino') {
@@ -262,12 +274,25 @@ $sizeCmd
     $setmainfont = "\\setmainfont{{$font}}";
     $usefont = '';
   }
-  if($color) {
-    $rubrum = "\\definecolor{rubrum}{rgb}{.6,0,0}";
+  if($colorlines) {
     $coloredlines = "\\grecoloredlines{153}{0}{0}";
   } else {
-    $rubrum = "\\definecolor{rubrum}{rgb}{0,0,0}";
     $coloredlines = "";
+  }
+  if($colorsym) {
+    $rubrumsym = "\\def\\rubrum{\\color{rubrum}}";
+  } else {
+    $rubrumsym = "\\def\\rubrum{}";
+  }
+  if($colorann) {
+    $rubrumann = "\\def\\rubrumann{\\color{rubrum}}";
+  } else {
+    $rubrumann = "\\def\\rubrumann{}";
+  }
+  if($colorcom) {
+    $rubrumcom = "\\def\\rubrumcom{\\color{rubrum}}";
+  } else {
+    $rubrumcom = "\\def\\rubrumcom{}";
   }
   $handle = fopen($nametex, 'w');
   fwrite($handle, <<<EOF
@@ -275,8 +300,10 @@ $sizeCmd
 $papercmd
 \\usepackage{xcolor}
 \\usepackage{graphicx}
-$rubrum
-\\def\\rubrum{\\color{rubrum}}
+\\definecolor{rubrum}{rgb}{.6,0,0}
+$rubrumsym
+$rubrumann
+$rubrumcom
 \\usepackage{gregoriotex}
 \\usepackage[utf8]{luainputenc}
 \\usepackage{fontspec}
@@ -295,7 +322,7 @@ $initialFormat
 \\def\\dualcomment#1#2{%
   {\\fontsize{12}{12}\\selectfont %
   \\setlength{\\parindent}{0pt}%
-  \\vbox{\\textit{\\rubrum #1 \\hfill #2}}%
+  \\vbox{\\textit{\\rubrumcom #1 \\hfill #2}}%
   \\vspace{0.25em}%
   \\relax%
 }}
@@ -434,7 +461,7 @@ function deleteOlderFilesIn($dir,$cutoff,$delIfEmpty) {
   $cutoff = $cutoff->getTimestamp();
   deleteOlderFilesIn($dir,$cutoff,false);
   deleteOlderFilesIn('tmp/',$cutoff,false);
-  
+
   if($format=='eps'){
     //exec("gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=epswrite -r600 -sOutputFile=$finalpdfS $namepdf");
     exec("pdftops -eps $namepdf $finalpdfS");
