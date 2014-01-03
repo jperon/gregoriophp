@@ -169,7 +169,7 @@ if($gabc=='') {
     if($annotationTwo == $annotation) {
       $annotationTwo = '';
     }
-    $titlecmd = $header['name'] == ''? '' : "\\begin{center}\\begin{huge}\\textsc{{$header['name']}}\\end{huge}\\end{center}\\vspace{-8pt}";
+    $titlecmd = $header['name'] == ''? '' : "\\begin{center}\\begin{huge}\\textsc{{$header['name']}}\\end{huge}\\end{center}\\bigskip";
     $annotcmd = '';
     if($annotation) {
       $annotsuffix='';
