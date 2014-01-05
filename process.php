@@ -14,13 +14,19 @@ $filename=$_REQUEST['filename'];
 $format=$_REQUEST['fmt'];
 $width=$_REQUEST['width'];
 $height=$_REQUEST['height'];
+$margin=$_REQUEST['margin'];
 $spacing=$_REQUEST['spacing'];
+$red=$_REQUEST['red'];
+$green=$_REQUEST['green'];
+$blue=$_REQUEST['blue'];
 $save=$_REQUEST['save'];
 $croppdf=true;
 $colorlines=true;
 $colorsym=true;
+$colortit=true;
 $colorann=true;
 $colorcom=true;
+$colorlet=true;
 if($size) {
   $sizeCmd = "\\fontsize{{$size}}{{$size}}\\selectfont";
 } else {
@@ -31,7 +37,8 @@ if($factor) {
 } else {
   $grefactorCmd = "\\setgrefactor{17}";
 }
-$initialFormat = '{\\fontsize{36}{36}\\selectfont #1}}';
+$initialFontSize = 2 * $factor;
+$initialFormat = "{\\fontsize{{$initialFontSize}}{{$initialFontSize}}\\selectfont #1}}";
 if($font == 'palatino') {
   $sizeCmd = '';
 }// else if($font=='GaramondPremierPro'){
@@ -46,11 +53,17 @@ if($_REQUEST['colorlines']=='false'){
 if($_REQUEST['colorsym']=='false'){
   $colorsym=false;
 }
+if($_REQUEST['colortit']=='false'){
+  $colortit=false;
+}
 if($_REQUEST['colorann']=='false'){
   $colorann=false;
 }
 if($_REQUEST['colorcom']=='false'){
   $colorcom=false;
+}
+if($_REQUEST['colorlet']=='false'){
+  $colorlet=false;
 }
 if($width==''){
   $width='148';
@@ -119,12 +132,13 @@ if($gabc=='') {
   }
   $finalpdfS = str_replace('\'','\\\'',$finalpdf);
 
-  $pwidth=$width+24;
+  $pwidth=$width;
+  $pheight=$height;
   $papercmd="%\\usepackage{vmargin}
-%\\setpapersize{custom}{{$pwidth}mm}{{$height}mm}
+%\\setpapersize{custom}{{$pwidth}mm}{{$pheight}mm}
 %\\setmargnohfrb{12mm}{12mm}{12mm}{12mm}
-\\usepackage[papersize={{$pwidth}mm,{$height}mm},margin=12mm]{geometry}
-\\special{ pdf: pagesize width {$pwidth}truemm height {$height}truemm}";
+\\usepackage[papersize={{$pwidth}mm,{$pheight}mm},margin={$margin}mm]{geometry}
+\\special{ pdf: pagesize width {$pwidth}truemm height {$pheight}truemm}";
   $includeScores = '';
   foreach($gabcs as $i => $gabc) {
     $theader = substr($gabc,0,strpos($gabc,'%%'));
@@ -169,7 +183,7 @@ if($gabc=='') {
     if($annotationTwo == $annotation) {
       $annotationTwo = '';
     }
-    $titlecmd = $header['name'] == ''? '' : "\\begin{center}\\begin{huge}\\textsc{{$header['name']}}\\end{huge}\\end{center}\\bigskip";
+    $titlecmd = $header['name'] == ''? '' : "\\begin{center}\\begin{huge}\\rubrumtit\\textsc{{$header['name']}}\\end{huge}\\end{center}\\bigskip";
     $annotcmd = '';
     if($annotation) {
       $annotsuffix='';
@@ -270,12 +284,18 @@ $sizeCmd
   if($font == 'times' || $font == 'palatino') {
     $setmainfont = '';
     $usefont = "\\usepackage{{$font}}\n\\usepackage[T1]{fontenc}";
+  } elseif ($font == 'LinLibertineO') {
+    $setmainfont = '';
+    $usefont = "\\usepackage{libertine}";
   } else {
     $setmainfont = "\\setmainfont{{$font}}";
     $usefont = '';
   }
+  $dred = $red/256;
+  $dgreen = $green/256;
+  $dblue = $blue/256;
   if($colorlines) {
-    $coloredlines = "\\grecoloredlines{153}{0}{0}";
+    $coloredlines = "\\grecoloredlines{{$red}}{{$green}}{{$blue}}\n\\def\\greabovelinestextstyle#1{\\color{rubrum}\\small \\textit{#1}}";
   } else {
     $coloredlines = "";
   }
@@ -283,6 +303,11 @@ $sizeCmd
     $rubrumsym = "\\def\\rubrum{\\color{rubrum}}";
   } else {
     $rubrumsym = "\\def\\rubrum{}";
+  }
+  if($colortit) {
+    $rubrumtit = "\\def\\rubrumtit{\\color{rubrum}}";
+  } else {
+    $rubrumtit = "\\def\\rubrumtit{}";
   }
   if($colorann) {
     $rubrumann = "\\def\\rubrumann{\\color{rubrum}}";
@@ -294,21 +319,28 @@ $sizeCmd
   } else {
     $rubrumcom = "\\def\\rubrumcom{}";
   }
+  if($colorlet) {
+    $rubrumlet = "\\def\\rubrumlet{\\color{rubrum}}";
+  } else {
+    $rubrumlet = "\\def\\rubrumlet{}";
+  }
   $handle = fopen($nametex, 'w');
   fwrite($handle, <<<EOF
 \\documentclass[10pt]{article}
 $papercmd
-\\usepackage{xcolor}
-\\usepackage{graphicx}
-\\definecolor{rubrum}{rgb}{.6,0,0}
+\\usepackage{graphicx,xcolor}
+\\usepackage{calc}
+\\definecolor{rubrum}{rgb}{{$dred},{$dgreen},{$dblue}}
 $rubrumsym
+$rubrumtit
 $rubrumann
 $rubrumcom
+$rubrumlet
 \\usepackage{gregoriotex}
 \\usepackage[utf8]{luainputenc}
 \\usepackage{fontspec}
 $usefont
-\\textwidth {$width}mm
+%\\textwidth {$width}mm
 \\pagestyle{empty}
 \\begin{document}
 $setmainfont%
@@ -316,6 +348,7 @@ $setmainfont%
 \\gresetstafflinefactor{13}
 $coloredlines
 \\def\\greinitialformat#1{%
+\\rubrumlet%
 $initialFormat
 
 
@@ -377,7 +410,7 @@ $initialFormat
 }
 \\gdef\\grelowchoralsignstyle#1{{\\fontsize{8}{8}\\selectfont #1}}
 \\gdef\\grehighchoralsignstyle#1{{\\fontsize{8}{8}\\selectfont #1}}
-\\def\\greabovelinestextstyle#1{\\hspace*{-5pt}\\small\\textit{#1}}
+%\\def\\greabovelinestextstyle#1{\\hspace*{-5pt}\\small\\textit{#1}}
 % greinitialformat must be set before calling!
 \\newlength{\\annotwidth}
 \\newlength{\\annottwowidth}

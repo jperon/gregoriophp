@@ -231,19 +231,38 @@ textarea,#chant-parent{
   <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
   <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
   <br>
-  Paper :
-  <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width: A5</label>
-  <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height: A5</label>
-  <input type="checkbox" id="cbCrop" checked /><label for="cbCrop">Crop</label>
+  <div style="width=125px;float:left">
+    Spacing :
+    <div><input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Default</label></div>
+  </div>
+  <div style="margin-left:130px">
+    <div style="width:40px;float:left">
+        Color :
+        <br>
+        <label id="lblRed" for="btnRed">R<input type='text' value='153' id='txtRed' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+        <label id="lblGreen" for="btnGreen">G<input type='text' value='0' id='txtGreen' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+        <label id="lblBlue" for="btnBlue">B<input type='text' value='0' id='txtBlue' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+    </div>
+    <div style="margin-left:60px">
+        <input type="checkbox" id="cbColorLines" checked /><label for="cbColorLines">Lines</label>
+        <input type="checkbox" id="cbColorSym" checked /><label for="cbColorSym">Symbols</label>
+        <input type="checkbox" id="cbColorLet" /><label for="cbColorLet">Lettrine</label><br>
+        <input type="checkbox" id="cbColorTit" /><label for="cbColorTit">Title</label>
+        <input type="checkbox" id="cbColorAnn" checked /><label for="cbColorAnn">Annotations</label>
+        <input type="checkbox" id="cbColorCom" checked /><label for="cbColorCom">Comments</label>
+    </div>
+  </div>
   <br>
-  Color :
-  <input type="checkbox" id="cbColorLines" checked /><label for="cbColorLines">Lines</label>
-  <input type="checkbox" id="cbColorSym" checked /><label for="cbColorSym">Symbols</label>
-  <input type="checkbox" id="cbColorAnn" checked /><label for="cbColorAnn">Annotations</label>
-  <input type="checkbox" id="cbColorCom" checked /><label for="cbColorCom">Comments</label>
-  <br>
-  Spacing :
-  <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Default</label>
+  <div style="margin-left=200px;">
+    <div style="width:60px;float:left">Paper :</div>
+    <div style="margin-left:80px">
+        <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width:A5</label>
+        <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height:A5</label>
+        <br>
+        <input type="checkbox" id="btnMargin" /><label id="lblMargin" for="btnMargin">Margin:<input type='text' value='12' id='txtMargin' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>mm</label>
+        <input type="checkbox" id="cbCrop" /><label for="cbCrop">Crop</label>
+    </div>
+  </div>
 </div>
 <div id="radioFont" style="display:none;position:absolute;z-index:100000">
 </div>
@@ -253,9 +272,9 @@ textarea,#chant-parent{
   <input type="radio" name="rbSpacing" value="vichi" id="rbSpacingVichi"><label for="rbSpacingVichi">Vichi</label>
 </div>
 <div id="radioWidth" style="display:none;position:absolute">
-  <input type="radio" name="rbWidth" value="81" id="rbWidth4"/><label for="rbWidth4">A6</label>
-  <input type="radio" name="rbWidth" value="124" checked id="rbWidth45"/><label for="rbWidth45">A5</label>
-  <input type="radio" name="rbWidth" value="186" id="rbWidth5"/><label for="rbWidth5">A4</label>
+  <input type="radio" name="rbWidth" value="105" id="rbWidth4"/><label for="rbWidth4">A6</label>
+  <input type="radio" name="rbWidth" value="148" checked id="rbWidth45"/><label for="rbWidth45">A5</label>
+  <input type="radio" name="rbWidth" value="210" id="rbWidth5"/><label for="rbWidth5">A4</label>
   <input type="radio" name="rbWidth" value="custom" id="rbWidthCustom"/><label for="rbWidthCustom"><input type="text" class='txtbox' size="3" id="txtWidth" value=""/><label for="txtWidth">mm</label></label>
 </div>
 <div id="radioHeight" style="display:none;position:absolute">
@@ -265,13 +284,13 @@ textarea,#chant-parent{
   <input type="radio" name="rbHeight" value="custom" id="rbHeightCustom"/><label for="rbHeightCustom"><input type="text" class='txtbox' size="3" id="txtHeight" value=""/><label for="txtWidth">mm</label></label>
 </div>
 <div class="tap"><textarea id="editor" spellcheck="false">user-notes:;&#10;commentary:;&#10;annotation:;&#10;centering-scheme:latin;&#10;%%&#10;(c4)</textarea></div>
+<div id="notifications" class="sans"></div>
+</div>
 <div class="lnkBtn sans">
-<a href="#" id="lnkDownloadGabc" draggable target="_blank">Download GABC</a>
+&nbsp;&nbsp;<a href="#" id="lnkDownloadGabc" draggable target="_blank">Download GABC</a>
 &nbsp;&nbsp;<a href="#" title="&lt;Ctrl>+&lt;Shift>+P" id="lnkGregorioPDF">Gregorio PDF</a>
 &nbsp;&nbsp;<a href="#" title="&lt;Ctrl>+&lt;Shift>+E" id="lnkGregorioEPS">EPS</a>
 &nbsp;&nbsp;<a href="#" title="&lt;Space>" id="lnkPlayScore">Play Score</a>
-</div>
-<div id="notifications" class="sans"></div>
 </div>
 <div id="chant-parent2">
   <div id="chant-parent">
@@ -288,18 +307,27 @@ textarea,#chant-parent{
 <input type="hidden" id="pdff_colorlines" name="colorlines"/>
 <input type="hidden" id="pdff_colorsym" name="colorsym"/>
 <input type="hidden" id="pdff_colorann" name="colorann"/>
+<input type="hidden" id="pdff_colortit" name="colortit"/>
 <input type="hidden" id="pdff_colorcom" name="colorcom"/>
+<input type="hidden" id="pdff_colorlet" name="colorlet"/>
 <input type="hidden" id="pdff_spacing" value="" name="spacing"/>
 <input type="hidden" id="pdff_font" value="LinLibertineO" name="font"/>
 <input type="hidden" id="pdff_fontsize" value="12" name="fontsize"/>
 <input type="hidden" id="pdff_factor" value="17" name="factor"/>
+<input type="hidden" id="pdff_margin" value="12" name="margin"/>
+<input type="hidden" id="pdff_red" value="153" name="red"/>
+<input type="hidden" id="pdff_green" value="0" name="green"/>
+<input type="hidden" id="pdff_blue" value="0" name="blue"/>
 <input type="hidden" id="pdff_fmt" name="fmt" value="pdf"/>
 </form>
 <div id="overlay" style="display:none;"></div>
 <script>
 gabcSettings.trimStaff=false;
 var gabcheader=null,
-    selHeight=210,selWidth=124,selSpacing='',selFont='LinLibertineO',selFontSize=12,selFactor=17,
+    selHeight=210,selWidth=148,selSpacing='',
+    selFont='LinLibertineO',selFontSize=12,
+    selFactor=17,selMargin=12,
+    selRed=153,selGreen=0,selBlue=0,
     overrideSpacing=false,
     overrideFont=false,
     overrideHeight=false,
@@ -317,6 +345,10 @@ function updateBoth(){
     if(typeof(gabcheader.cValues.spacing)!='string') gabcheader.cValues.spacing = selSpacing;
     if(typeof(gabcheader.cValues.font)!='string') gabcheader.cValues.font = selFontSize;
     if(typeof(gabcheader.cValues.factor)!='string') gabcheader.cValues.factor = selFactor;
+    if(typeof(gabcheader.cValues.margin)!='string') gabcheader.cValues.margin = selMargin;
+    if(typeof(gabcheader.cValues.red)!='string') gabcheader.cValues.red = selRed;
+    if(typeof(gabcheader.cValues.green)!='string') gabcheader.cValues.green = selGreen;
+    if(typeof(gabcheader.cValues.blue)!='string') gabcheader.cValues.blue = selblue;
     var oLen = gabcheader.original.length;
     var header = gabcheader.toString();
     var nLen = header.length;
@@ -331,17 +363,17 @@ function updateBoth(){
   if(gabcheader.cValues.width != selWidth) {
     val = parseFloat(gabcheader.cValues.width);
     switch(val){
-      case 81:
+      case 105:
         $("#rbWidth4")[0].checked = true;
         $("#rbWidth4").button("refresh");
         selWidth = val;
         break;
-      case 186:
+      case 210:
         $("#rbWidth5")[0].checked = true;
         $("#rbWidth5").button("refresh");
         selWidth = val;
         break;
-      case 124:
+      case 148:
         $("#rbWidth45")[0].checked = true;
         $("#rbWidth45").button("refresh");
         selWidth = val;
@@ -422,6 +454,22 @@ function updateBoth(){
   if(typeof(gabcheader.cValues.factor)=='string' && gabcheader.cValues.factor != selFactor && parseFloat(gabcheader.cValues.factor)) {
     selFactor = gabcheader.cValues.factor;
     $("#txtFactor,#imgf_factor,#pdff_factor").val(selFactor);
+  }
+  if(typeof(gabcheader.cValues.margin)=='string' && gabcheader.cValues.margin != selMargin && parseFloat(gabcheader.cValues.margin)) {
+    selMargin = gabcheader.cValues.margin;
+    $("#txtMargin,#imgf_margin,#pdff_margin").val(selMargin);
+  }
+  if(typeof(gabcheader.cValues.red)=='string' && gabcheader.cValues.red != selRed && parseFloat(gabcheader.cValues.red)) {
+    selRed = gabcheader.cValues.red;
+    $("#txtRed,#imgf_red,#pdff_red").val(selRed);
+  }
+  if(typeof(gabcheader.cValues.green)=='string' && gabcheader.cValues.green != selGreen && parseFloat(gabcheader.cValues.green)) {
+    selGreen = gabcheader.cValues.green;
+    $("#txtGreen,#imgf_green,#pdff_green").val(selGreen);
+  }
+  if(typeof(gabcheader.cValues.blue)=='string' && gabcheader.cValues.blue != selBlue && parseFloat(gabcheader.cValues.blue)) {
+    selBlue = gabcheader.cValues.blue;
+    $("#txtBlue,#imgf_blue,#pdff_blue").val(selBlue);
   }
   updateLocalHeader(gabcheader);
 }
@@ -522,14 +570,20 @@ GabcJob.prototype.run = function(){
     croppdf:$("#cbCrop")[0].checked,
     colorlines:$("#cbColorLines")[0].checked,
     colorsym:$("#cbColorSym")[0].checked,
+    colortit:$("#cbColorTit")[0].checked,
     colorann:$("#cbColorAnn")[0].checked,
     colorcom:$("#cbColorCom")[0].checked,
+    colorlet:$("#cbColorLet")[0].checked,
     width:this.header.cValues.width || selWidth,
     height:this.header.cValues.height || selHeight,
     spacing:typeof(this.header.cValues.spacing)=='string'? this.header.cValues.spacing : selSpacing,
     font:typeof(this.header.cValues.font)=='string'? this.header.cValues.font : selFont,
     fontsize:typeof(this.header.cValues.fontsize)=='string'? this.header.cValues.fontsize : selFont,
     factor:typeof(this.header.cValues.factor)=='string'? this.header.cValues.factor : selFont,
+    margin:typeof(this.header.cValues.margin)=='string'? this.header.cValues.margin : selFont,
+    red:typeof(this.header.cValues.red)=='string'? this.header.cValues.red : selFont,
+    green:typeof(this.header.cValues.green)=='string'? this.header.cValues.green : selFont,
+    blue:typeof(this.header.cValues.blue)=='string'? this.header.cValues.blue : selFont,
     save:true
   };
   $.post(processUrl,vars)
@@ -612,9 +666,9 @@ function docKeyDown(e){
 
 function widthChanged(width,forceUpdateGabc){
   var val = typeof(width)=="number"? width :
-    $("#rbWidth4")[0].checked? 81 :
-    $("#rbWidth5")[0].checked? 186 :
-    $("#rbWidth45")[0].checked? 124 :
+    $("#rbWidth4")[0].checked? 105 :
+    $("#rbWidth5")[0].checked? 210 :
+    $("#rbWidth45")[0].checked? 148 :
     parseFloat($("#txtWidth").val()) || 5;
   selWidth= val;
   gabcheader = gabcheader || getHeader($("#editor").val());
@@ -672,6 +726,13 @@ function colorsymChanged(){
   $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
 }
 
+function colortitChanged(){
+  var checked=this.checked;
+  $("#imgf_colortit").val(checked);
+  $("#pdff_colortit").val(checked);
+  $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
+}
+
 function colorannChanged(){
   var checked=this.checked;
   $("#imgf_colorann").val(checked);
@@ -683,6 +744,13 @@ function colorcomChanged(){
   var checked=this.checked;
   $("#imgf_colorcom").val(checked);
   $("#pdff_colorcom").val(checked);
+  $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
+}
+
+function colorletChanged(){
+  var checked=this.checked;
+  $("#imgf_colorlet").val(checked);
+  $("#pdff_colorlet").val(checked);
   $(this).button({icons:checked?{primary: "ui-icon-check"}:{}});
 }
 
@@ -759,6 +827,46 @@ function factorKeyUp(e) {
     updateEditorHeader(gabcheader);
   }
   $("#imgf_fontsize,#pdff_factor").val(selFactor);
+}
+
+function marginKeyUp(e) {
+  var val = selMargin = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.margin != val){
+    gabcheader.cValues.margin = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_fontsize,#pdff_margin").val(selMargin);
+}
+
+function redKeyUp(e) {
+  var val = selRed = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.red != val){
+    gabcheader.cValues.red = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_fontsize,#pdff_red").val(selRed);
+}
+
+function greenKeyUp(e) {
+  var val = selGreen = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.green != val){
+    gabcheader.cValues.green = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_fontsize,#pdff_green").val(selGreen);
+}
+
+function blueKeyUp(e) {
+  var val = selBlue = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.blue != val){
+    gabcheader.cValues.blue = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_fontsize,#pdff_blue").val(selBlue);
 }
 
 function hideImage(){
@@ -887,11 +995,13 @@ $(function() {
   $("#cbCrop").button({icons:{primary: "ui-icon-check"}});
   $("#cbColorLines").button({icons:{primary: "ui-icon-check"}});
   $("#cbColorSym").button({icons:{primary: "ui-icon-check"}});
+  $("#cbColorTit").button({icons:{primary: "ui-icon-check"}});
   $("#cbColorAnn").button({icons:{primary: "ui-icon-check"}});
   $("#cbColorCom").button({icons:{primary: "ui-icon-check"}});
+  $("#cbColorLet").button({icons:{primary: "ui-icon-check"}});
   $("#radioSpacing,#radioWidth,#radioHeight").buttonset();
   $("#radioFont").buttonsetv();
-  $("#btnSpacing,#btnFont,#btnFontSize,#btnFactor,#btnWidth,#btnHeight").button({create:windowResized});
+  $("#btnSpacing,#btnFont,#btnFontSize,#btnFactor,#btnMargin,#btnRed,#btnGreen,#btnBlue,#btnWidth,#btnHeight").button({create:windowResized});
   $("#chant-parent2").resizable({handles:"e"});
   if(location.protocol.slice(0,4) != "http" ||
      !location.hostname.match(/(?:www\.)?(?:illuminarepublications|sacredmusicproject)\.com/i)
@@ -907,15 +1017,28 @@ $(function() {
   $("#txtWidth").keyup(widthChanged);
   $("#txtHeight").keyup(heightChanged);
   $("#cbCrop").change(cropChanged);
+  $('#cbCrop').prop('checked',false).button('refresh').change();
   $("#cbColorLines").change(colorlinesChanged);
   $("#cbColorSym").change(colorsymChanged);
+  $("#cbColorTit").change(colortitChanged);
+  $('#cbColorTit').prop('checked',false).button('refresh').change();
   $("#cbColorAnn").change(colorannChanged);
   $("#cbColorCom").change(colorcomChanged);
+  $("#cbColorLet").change(colorletChanged);
+  $('#cbColorLet').prop('checked',false).button('refresh').change();
   $("#btnSpacing,#btnFont,#btnWidth,#btnHeight,#lblSpacing,#lblFont,#lblWidth,#lblHeight").mouseenter(showRadio).mouseleave(hideRadio).change(overrideChanged);
   $("#btnFontSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFontSize').focus()});
   $("#btnFactor").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFactor').focus()});
+  $("#btnMargin").change(function(e){this.checked=false;$(this).button('refresh');$('#txtMargin').focus()});
+  $("#btnRed").change(function(e){this.checked=false;$(this).button('refresh');$('#txtRed').focus()});
+  $("#btnGreen").change(function(e){this.checked=false;$(this).button('refresh');$('#txtGreen').focus()});
+  $("#btnBlue").change(function(e){this.checked=false;$(this).button('refresh');$('#txtBlue').focus()});
   $("#txtFontSize").keyup(fontSizeKeyUp).keyup();
   $("#txtFactor").keyup(factorKeyUp).keyup();
+  $("#txtMargin").keyup(marginKeyUp).keyup();
+  $("#txtRed").keyup(redKeyUp).keyup();
+  $("#txtGreen").keyup(greenKeyUp).keyup();
+  $("#txtBlue").keyup(blueKeyUp).keyup();
   $("#radioSpacing,#radioFont,#radioWidth,#radioHeight").mouseenter(dontAllowHide).mouseleave(allowHide);
   $("input[name=rbFont]").change(fontChanged);
   $("input[name=rbSpacing]").change(spacingChanged);
@@ -967,6 +1090,11 @@ $(function() {
     if(isNaN(colorsym)) colorsym = $.QueryString.colorsym;
     $('#cbColorSym').prop('checked',colorsym).button('refresh').change();
   }
+  if($.QueryString.colortit) {
+    var colortit = parseInt($.QueryString.colortit);
+    if(isNaN(colortit)) colortit = $.QueryString.colortit;
+    $('#cbColorTit').prop('checked',colorTit).button('refresh').change();
+  }
   if($.QueryString.colorann) {
     var colorann = parseInt($.QueryString.colorann);
     if(isNaN(colorann)) colorann = $.QueryString.colorann;
@@ -976,6 +1104,11 @@ $(function() {
     var colorcom = parseInt($.QueryString.colorcom);
     if(isNaN(colorcom)) colorcom = $.QueryString.colorcom;
     $('#cbColorCom').prop('checked',colorcom).button('refresh').change();
+  }
+  if($.QueryString.colorlet) {
+    var colorlet = parseInt($.QueryString.colorlet);
+    if(isNaN(colorlet)) colorlet = $.QueryString.colorlet;
+    $('#cbColorLet').prop('checked',colorlet).button('refresh').change();
   }
   if($.QueryString.width) {
     widthChanged(parseFloat($.QueryString.width),true);
