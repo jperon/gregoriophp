@@ -81,8 +81,7 @@ font-family: 'Cardo', serif;
   };
   (function() {
     var wf = document.createElement('script');
-    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-        '://localhost/js/webfont.js';
+    wf.src = '/gregoriophp/js/webfont.js';
     wf.type = 'text/javascript';
     wf.async = 'true';
     var s = document.getElementsByTagName('script')[0];
@@ -180,7 +179,7 @@ textarea,#chant-parent{
 }
 #chant-parent2{
   width:6.5in;
-  max-width:100%;
+  max-width:50%;
   float:right;
   height:100%;
   margin:auto;
@@ -1006,7 +1005,7 @@ $(function() {
   if(location.protocol.slice(0,4) != "http" ||
      !location.hostname.match(/(?:www\.)?(?:illuminarepublications|sacredmusicproject)\.com/i)
     ) {
-    processUrl = "http://localhost/gregoriophp/process.php";
+    processUrl = "/gregoriophp/process.php";
     $("#pdfForm").attr("action",processUrl);
   }
 
