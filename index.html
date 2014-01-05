@@ -224,73 +224,74 @@ textarea,#chant-parent{
 }
 </style>
 <div class='body'>
-<div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
-  Font :
-  <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Libertine</label>
-  <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
-  <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
-  <br>
-  <div style="width=125px;float:left">
-    Spacing :
-    <div><input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Default</label></div>
-  </div>
-  <div style="margin-left:130px">
-    <div style="width:40px;float:left">
-        Color :
-        <br>
-        <label id="lblRed" for="btnRed">R<input type='text' value='153' id='txtRed' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
-        <label id="lblGreen" for="btnGreen">G<input type='text' value='0' id='txtGreen' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
-        <label id="lblBlue" for="btnBlue">B<input type='text' value='0' id='txtBlue' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+    <div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
+      Font :
+      <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Libertine</label>
+      <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+      <br>
+      <div style="width=125px;float:left">
+        Spacing :
+        <div><input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Default</label></div>
+      </div>
+      <div style="margin-left:130px">
+        <div style="width:40px;float:left">
+            Color :
+            <br>
+            <label id="lblRed" for="btnRed">R<input type='text' value='153' id='txtRed' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+            <label id="lblGreen" for="btnGreen">G<input type='text' value='0' id='txtGreen' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+            <label id="lblBlue" for="btnBlue">B<input type='text' value='0' id='txtBlue' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+        </div>
+        <div style="margin-left:60px">
+            <input type="checkbox" id="cbColorLines" checked /><label for="cbColorLines">Lines</label>
+            <input type="checkbox" id="cbColorSym" checked /><label for="cbColorSym">Symbols</label>
+            <input type="checkbox" id="cbColorLet" /><label for="cbColorLet">Lettrine</label><br>
+            <input type="checkbox" id="cbColorTit" /><label for="cbColorTit">Title</label>
+            <input type="checkbox" id="cbColorAnn" checked /><label for="cbColorAnn">Annotations</label>
+            <input type="checkbox" id="cbColorCom" checked /><label for="cbColorCom">Comments</label>
+        </div>
+      </div>
+      <br>
+      <div style="margin-left=200px;">
+        <div style="width:60px;float:left">Paper :</div>
+        <div style="margin-left:80px">
+            <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width:A5</label>
+            <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height:A5</label>
+            <br>
+            <input type="checkbox" id="btnMargin" /><label id="lblMargin" for="btnMargin">Margin:<input type='text' value='12' id='txtMargin' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>mm</label>
+            <input type="checkbox" id="cbCrop" /><label for="cbCrop">Crop</label>
+        </div>
+      </div>
     </div>
-    <div style="margin-left:60px">
-        <input type="checkbox" id="cbColorLines" checked /><label for="cbColorLines">Lines</label>
-        <input type="checkbox" id="cbColorSym" checked /><label for="cbColorSym">Symbols</label>
-        <input type="checkbox" id="cbColorLet" /><label for="cbColorLet">Lettrine</label><br>
-        <input type="checkbox" id="cbColorTit" /><label for="cbColorTit">Title</label>
-        <input type="checkbox" id="cbColorAnn" checked /><label for="cbColorAnn">Annotations</label>
-        <input type="checkbox" id="cbColorCom" checked /><label for="cbColorCom">Comments</label>
+    <div id="radioFont" style="display:none;position:absolute;z-index:100000">
     </div>
-  </div>
-  <br>
-  <div style="margin-left=200px;">
-    <div style="width:60px;float:left">Paper :</div>
-    <div style="margin-left:80px">
-        <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width:A5</label>
-        <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height:A5</label>
-        <br>
-        <input type="checkbox" id="btnMargin" /><label id="lblMargin" for="btnMargin">Margin:<input type='text' value='12' id='txtMargin' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>mm</label>
-        <input type="checkbox" id="cbCrop" /><label for="cbCrop">Crop</label>
+    <div id="radioSpacing" style="display:none;position:absolute">
+      <input type="radio" name="rbSpacing" value="" checked id="rbSpacingDefault"><label for="rbSpacingDefault">Default</label>
+      <input type="radio" name="rbSpacing" value="smith" id="rbSpacingSmith"><label for="rbSpacingSmith">Smith</label>
+      <input type="radio" name="rbSpacing" value="vichi" id="rbSpacingVichi"><label for="rbSpacingVichi">Vichi</label>
     </div>
-  </div>
-</div>
-<div id="radioFont" style="display:none;position:absolute;z-index:100000">
-</div>
-<div id="radioSpacing" style="display:none;position:absolute">
-  <input type="radio" name="rbSpacing" value="" checked id="rbSpacingDefault"><label for="rbSpacingDefault">Default</label>
-  <input type="radio" name="rbSpacing" value="smith" id="rbSpacingSmith"><label for="rbSpacingSmith">Smith</label>
-  <input type="radio" name="rbSpacing" value="vichi" id="rbSpacingVichi"><label for="rbSpacingVichi">Vichi</label>
-</div>
-<div id="radioWidth" style="display:none;position:absolute">
-  <input type="radio" name="rbWidth" value="105" id="rbWidth4"/><label for="rbWidth4">A6</label>
-  <input type="radio" name="rbWidth" value="148" checked id="rbWidth45"/><label for="rbWidth45">A5</label>
-  <input type="radio" name="rbWidth" value="210" id="rbWidth5"/><label for="rbWidth5">A4</label>
-  <input type="radio" name="rbWidth" value="custom" id="rbWidthCustom"/><label for="rbWidthCustom"><input type="text" class='txtbox' size="3" id="txtWidth" value=""/><label for="txtWidth">mm</label></label>
-</div>
-<div id="radioHeight" style="display:none;position:absolute">
-  <input type="radio" name="rbHeight" value="148" id="rbHeight9"/><label for="rbHeight9">A6</label>
-  <input type="radio" name="rbHeight" value="210" checked id="rbHeight11"/><label for="rbHeight11">A5</label>
-  <input type="radio" name="rbHeight" value="297" id="rbHeight13"/><label for="rbHeight13">A4</label>
-  <input type="radio" name="rbHeight" value="custom" id="rbHeightCustom"/><label for="rbHeightCustom"><input type="text" class='txtbox' size="3" id="txtHeight" value=""/><label for="txtWidth">mm</label></label>
-</div>
-<div class="tap"><textarea id="editor" spellcheck="false">user-notes:;&#10;commentary:;&#10;annotation:;&#10;centering-scheme:latin;&#10;%%&#10;(c4)</textarea></div>
-<div id="notifications" class="sans"></div>
+    <div id="radioWidth" style="display:none;position:absolute">
+      <input type="radio" name="rbWidth" value="105" id="rbWidth4"/><label for="rbWidth4">A6</label>
+      <input type="radio" name="rbWidth" value="148" checked id="rbWidth45"/><label for="rbWidth45">A5</label>
+      <input type="radio" name="rbWidth" value="210" id="rbWidth5"/><label for="rbWidth5">A4</label>
+      <input type="radio" name="rbWidth" value="custom" id="rbWidthCustom"/><label for="rbWidthCustom"><input type="text" class='txtbox' size="3" id="txtWidth" value=""/><label for="txtWidth">mm</label></label>
+    </div>
+    <div id="radioHeight" style="display:none;position:absolute">
+      <input type="radio" name="rbHeight" value="148" id="rbHeight9"/><label for="rbHeight9">A6</label>
+      <input type="radio" name="rbHeight" value="210" checked id="rbHeight11"/><label for="rbHeight11">A5</label>
+      <input type="radio" name="rbHeight" value="297" id="rbHeight13"/><label for="rbHeight13">A4</label>
+      <input type="radio" name="rbHeight" value="custom" id="rbHeightCustom"/><label for="rbHeightCustom"><input type="text" class='txtbox' size="3" id="txtHeight" value=""/><label for="txtWidth">mm</label></label>
+    </div>
+    <div class="tap"><textarea id="editor" spellcheck="false">user-notes:;&#10;commentary:;&#10;annotation:;&#10;centering-scheme:latin;&#10;%%&#10;(c4)</textarea></div>
+    <div id="notifications" class="sans"></div>
 </div>
 <div class="lnkBtn sans">
-&nbsp;&nbsp;<a href="#" id="lnkDownloadGabc" draggable target="_blank">Download GABC</a>
-&nbsp;&nbsp;<a href="#" title="&lt;Ctrl>+&lt;Shift>+P" id="lnkGregorioPDF">Gregorio PDF</a>
-&nbsp;&nbsp;<a href="#" title="&lt;Ctrl>+&lt;Shift>+E" id="lnkGregorioEPS">EPS</a>
-&nbsp;&nbsp;<a href="#" title="&lt;Space>" id="lnkPlayScore">Play Score</a>
+    &nbsp;&nbsp;<a href="#" id="lnkDownloadGabc" draggable target="_blank">Download GABC</a>
+    &nbsp;&nbsp;<a href="#" title="&lt;Ctrl>+&lt;Shift>+P" id="lnkGregorioPDF">Gregorio PDF</a>
+    &nbsp;&nbsp;<a href="#" title="&lt;Ctrl>+&lt;Shift>+E" id="lnkGregorioEPS">EPS</a>
+    &nbsp;&nbsp;<a href="#" title="&lt;Space>" id="lnkPlayScore">Play Score</a>
 </div>
+<div class="lnkBtn sans"> &nbsp;&nbsp;<b>Special characters : </b>℟ ℣ † ✠ æ ǽ œ œ́ á é í ó ú ý</div>
 <div id="chant-parent2">
   <div id="chant-parent">
     <div id="chant-pad">
