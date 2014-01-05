@@ -30,15 +30,13 @@ $colorlet=true;
 if($size) {
   $sizeCmd = "\\fontsize{{$size}}{{$size}}\\selectfont";
 } else {
-  $sizeCmd = '\\large';
+  $sizeCmd = "\\fontsize{12}{12}\\selectfont";
 }
 if($factor) {
   $grefactorCmd = "\\setgrefactor{{$factor}}";
 } else {
   $grefactorCmd = "\\setgrefactor{17}";
 }
-$initialFontSize = 2 * $factor;
-$initialFormat = "{\\fontsize{{$initialFontSize}}{{$initialFontSize}}\\selectfont #1}}";
 if($font == 'palatino') {
   $sizeCmd = '';
 }// else if($font=='GaramondPremierPro'){
@@ -71,6 +69,23 @@ if($width==''){
 if($height==''){
   $height='210';
 }
+if($margin==''){
+  $margin='12';
+}
+if($red==''){
+  $red='152';
+}
+if($green==''){
+  $green='0';
+}
+if($blue==''){
+  $blue='0';
+}
+if($factor==''){
+  $factor='17';
+}
+$initialFontSize = 2 * $factor;
+$initialFormat = "{\\fontsize{{$initialFontSize}}{{$initialFontSize}}\\selectfont #1}}";
 ini_set('magic_quotes_runtime', 0);
 if($format=='eps') {
   $ftmmime='application/eps';
