@@ -84,6 +84,11 @@ if($blue==''){
 if($factor==''){
   $factor='17';
 }
+if($factor<17){
+  $interligne = 17/$factor;
+} else {
+  $interligne = 1;
+}
 $initialFontSize = 2 * $factor;
 $initialFormat = "{\\fontsize{{$initialFontSize}}{{$initialFontSize}}\\selectfont #1}}";
 ini_set('magic_quotes_runtime', 0);
@@ -274,6 +279,7 @@ if($gabc=='') {
     $includeScores .= "$titlecmd
 $commentcmd
 $grefactorCmd
+
 %\\setgrefactor{17}
 $spacingcmd
 $annotcmd
@@ -362,6 +368,9 @@ $setmainfont%
 \\newfontfamily\\versiculum{Versiculum}
 \\gresetstafflinefactor{13}
 $coloredlines
+
+\\multiply\\grespacelinestext by {$interligne}
+
 \\def\\greinitialformat#1{%
 \\rubrumlet%
 $initialFormat
