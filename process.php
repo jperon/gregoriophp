@@ -369,8 +369,6 @@ $setmainfont%
 \\gresetstafflinefactor{13}
 $coloredlines
 
-\\multiply\\grespacelinestext by {$interligne}
-
 \\def\\greinitialformat#1{%
 \\rubrumlet%
 $initialFormat
