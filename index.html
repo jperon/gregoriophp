@@ -102,7 +102,6 @@ font-family: 'Cardo', serif;
 <style>
 .LinLibertineO{
   font-family: 'Linux Libertine O', serif;
-  font-size: 18px;
 }
 .OFLSortsMillGoudy{
   font-family: 'Sorts Mill Goudy', serif;
@@ -137,7 +136,7 @@ font-family: 'Cardo', serif;
 .Cardo{
   font-family: 'Cardo', serif;
 }
-.OFLSortsMillGoudy,.Fanwood,.Crimson,.IMFELLDoublePicaPRO,.IMFELLDWPicaPRO,.IMFELLEnglishPRO,.IMFELLFrenchCanonPRO,.Cardo,.Georgia,.times,.palatino,.GaramondPremierPro,.garamond-pro{
+.LinLibertineO,.OFLSortsMillGoudy,.Fanwood,.Crimson,.IMFELLDoublePicaPRO,.IMFELLDWPicaPRO,.IMFELLEnglishPRO,.IMFELLFrenchCanonPRO,.Cardo,.Georgia,.times,.palatino,.GaramondPremierPro,.garamond-pro{
   font-size: 18px;
 }
 .garamond-pro{
@@ -225,42 +224,38 @@ textarea,#chant-parent{
 </style>
 <div class='body'>
     <div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:4px 4px;margin-bottom:10px">
+      <div style="width=5ex;float:right">
+        Spacing : <br>
+        <input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Default</label>
+      </div>
+      <div>
       Font :
       <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Libertine</label>
       <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
       <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
-      <br>
-      <div style="width=125px;float:left">
-        Spacing :
-        <div><input type="checkbox" id="btnSpacing" /><label id="lblSpacing" for="btnSpacing">Default</label></div>
       </div>
-      <div style="margin-left:130px">
-        <div style="width:40px;float:left">
+      <div>
+        <div>
             Color :
-            <br>
-            <label id="lblRed" for="btnRed">R<input type='text' value='153' id='txtRed' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
-            <label id="lblGreen" for="btnGreen">G<input type='text' value='0' id='txtGreen' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
-            <label id="lblBlue" for="btnBlue">B<input type='text' value='0' id='txtBlue' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+            <input type="checkbox" id="btnRed" /><label id="lblRed" for="btnRed">R<input type='text' value='153' id='txtRed' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+            <input type="checkbox" id="btnGreen" /><label id="lblGreen" for="btnGreen">G<input type='text' value='0' id='txtGreen' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+            <input type="checkbox" id="btnBlue" /><label id="lblBlue" for="btnBlue">B<input type='text' value='0' id='txtBlue' maxlength='3' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
         </div>
-        <div style="margin-left:60px">
+        <div>
             <input type="checkbox" id="cbColorLines" checked /><label for="cbColorLines">Lines</label>
             <input type="checkbox" id="cbColorSym" checked /><label for="cbColorSym">Symbols</label>
-            <input type="checkbox" id="cbColorLet" /><label for="cbColorLet">Lettrine</label><br>
+            <input type="checkbox" id="cbColorLet" /><label for="cbColorLet">Initial</label>
             <input type="checkbox" id="cbColorTit" /><label for="cbColorTit">Title</label>
             <input type="checkbox" id="cbColorAnn" checked /><label for="cbColorAnn">Annotations</label>
             <input type="checkbox" id="cbColorCom" checked /><label for="cbColorCom">Comments</label>
         </div>
       </div>
-      <br>
       <div style="margin-left=200px;">
-        <div style="width:60px;float:left">Paper :</div>
-        <div style="margin-left:80px">
+        Paper :
             <input type="checkbox" id="btnWidth" /><label id="lblWidth" for="btnWidth">Width:A5</label>
             <input type="checkbox" id="btnHeight" /><label id="lblHeight" for="btnHeight">Height:A5</label>
-            <br>
             <input type="checkbox" id="btnMargin" /><label id="lblMargin" for="btnMargin">Margin:<input type='text' value='12' id='txtMargin' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>mm</label>
             <input type="checkbox" id="cbCrop" /><label for="cbCrop">Crop</label>
-        </div>
       </div>
     </div>
     <div id="radioFont" style="display:none;position:absolute;z-index:100000">

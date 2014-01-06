@@ -366,6 +366,9 @@ $coloredlines
 \\rubrumlet%
 $initialFormat
 
+\\tolerance=1000
+\\pretolerance=300
+
 
 \\def\\dualcomment#1#2{%
   {\\fontsize{12}{12}\\selectfont %
