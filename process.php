@@ -312,9 +312,9 @@ $sizeCmd
     $setmainfont = "\\setmainfont{{$font}}";
     $usefont = '';
   }
-  $dred = $red/256;
-  $dgreen = $green/256;
-  $dblue = $blue/256;
+  $dred = $red/255;
+  $dgreen = $green/255;
+  $dblue = $blue/255;
   if($colorlines) {
     $coloredlines = "\\grecoloredlines{{$red}}{{$green}}{{$blue}}\n\\def\\greabovelinestextstyle#1{\\color{rubrum}\\small \\textit{#1}}";
   } else {
