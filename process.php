@@ -7,6 +7,8 @@ foreach($folder as $file)
 		unlink($file->getPathname());
 $font=$_REQUEST['font'];
 $size=$_REQUEST['fontsize'];
+$initialfont=$_REQUEST['initial'];
+$initialsize=$_REQUEST['initialsize'];
 $factor=$_REQUEST['factor'];
 $gabc=$_REQUEST['gabc'];
 $guid=$_REQUEST['guid'];
@@ -366,6 +368,7 @@ $usefont
 \\begin{document}
 $setmainfont%
 \\newfontfamily\\versiculum{Versiculum}
+\\font\\initial={$initialfont} at {$initialsize}pt
 \\gresetstafflinefactor{13}
 $coloredlines
 
@@ -437,6 +440,7 @@ $initialFormat
 \\gdef\\grehighchoralsignstyle#1{{\\fontsize{8}{8}\\selectfont #1}}
 %\\def\\greabovelinestextstyle#1{\\hspace*{-5pt}\\small\\textit{#1}}
 % greinitialformat must be set before calling!
+\\def\\greinitialformat#1{{\\initial #1}}
 \\newlength{\\annotwidth}
 \\newlength{\\annottwowidth}
 \\newlength{\\spacewidth}
