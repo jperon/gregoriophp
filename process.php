@@ -301,6 +301,12 @@ $sizeCmd
       return;
     }
   }
+if($initialfont==''){
+    $initialfont='l800';
+}
+if($initialsize==''){
+    $initialsize=36;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // Write out a template main.tex file that includes the score just outputted.
