@@ -1,14 +1,18 @@
 <?php
-// Suppression des fichiers temporaires vieux de plus de trois heures.
+// Suppression des fichiers temporaires vieux de plus de trois minutes.
 // On laisse les plus récents, pour faciliter les débogages.
 $folder = new DirectoryIterator('tmp/');
 foreach($folder as $file)
-	if($file->isFile() && !$file->isDot() && (time() - $file->getMTime() > 10800))
+	if($file->isFile() && !$file->isDot() && (time() - $file->getMTime() > 180))
 		unlink($file->getPathname());
 $font=$_REQUEST['font'];
 $size=$_REQUEST['fontsize'];
 $initialfont=$_REQUEST['initial'];
 $initialsize=$_REQUEST['initialsize'];
+$initialraise=$_REQUEST['initialraise'];
+$annotraise=$_REQUEST['annotraise'];
+$spacelinestext=$_REQUEST['spacelinestext'];
+$spacebeneathtext=$_REQUEST['spacebeneathtext'];
 $factor=$_REQUEST['factor'];
 $gabc=$_REQUEST['gabc'];
 $guid=$_REQUEST['guid'];
@@ -224,11 +228,11 @@ if($gabc=='') {
       $annotation = "{\\rubrumann $annotation}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotation);
-        $annothelper = "\\fontsize{8}{8}\\selectfont{{$upperAnnot}$annotsuffix}";
+        $annothelper = "{\\footnotesize {$upperAnnot}$annotsuffix}";
       } else {
-        $annothelper = "\\fontsize{10}{10}\\selectfont{\\textsc{{$annotation}}$annotsuffix}";
+        $annothelper = "{\\footnotesize\\textsc{{$annotation}}$annotsuffix}";
       }
-      $annotcmd = "\\def\\annot{{$annothelper}}";
+      $annotcmd = "\\def\\annot{\\raisebox{{$annotraise}pt}[1.2ex][1ex]{{$annothelper}}}";
     } else {
       $annotcmd = "\\def\\annot{}";
     }
@@ -249,12 +253,12 @@ if($gabc=='') {
       $annotationTwo = "{\\rubrumann $annotationTwo}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotationTwo);
-        $annothelperTwo = "\\fontsize{8}{8}\\selectfont{{$upperAnnot}$annotsuffix}";
+        $annothelperTwo = "{\\footnotesize {$upperAnnot}$annotsuffix}";
       } else {
-        $annothelperTwo = "\\fontsize{10}{10}\\selectfont{\\textsc{{$annotationTwo}}$annotsuffix}";
+        $annothelperTwo = "{\\footnotesize\\textsc{{$annotationTwo}}$annotsuffix}";
       }
       //$annotcmd .= "\\gresetsecondlineaboveinitial{{$annothelperTwo}}{{$annothelperTwo}}";
-      $annotcmd .= "\\def\\annottwo{{$annothelperTwo}}";
+      $annotcmd .= "\\def\\annottwo{\\raisebox{{$annotraise}pt}[1.2ex][1ex]{{$annothelperTwo}}}";
     } else {
       $annotcmd .= "\\def\\annottwo{}";
     }
@@ -307,6 +311,12 @@ if($initialfont==''){
 if($initialsize==''){
     $initialsize=36;
 }
+if($initialraise==''){
+    $initialraise=0;
+}
+if($annotraise==''){
+    $annotraise=0;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // Write out a template main.tex file that includes the score just outputted.
@@ -353,6 +363,16 @@ if($initialsize==''){
   } else {
     $rubrumlet = "\\def\\rubrumlet{}";
   }
+  if($spacelinestext != "") {
+    $grespacelinestext = "\\grechangedim{\\grespacelinestext}{{$spacelinestext}pt}";
+  } else {
+    $grespacelinestext = "";
+  }
+  if($spacebeneathtext != "") {
+    $grespacebeneathtext = "\\grechangedim{\\grespacebeneathtext}{{$spacebeneathtext}pt}";
+  } else {
+    $grespacebeneathtext = "";
+  }
   $handle = fopen($nametex, 'w');
   fwrite($handle, <<<EOF
 \\documentclass[10pt]{article}
@@ -376,6 +396,8 @@ $setmainfont%
 \\newfontfamily\\versiculum{Versiculum}
 \\font\\initial={$initialfont} at {$initialsize}pt
 \\gresetstafflinefactor{13}
+$grespacelinestext
+$grespacebeneathtext
 $coloredlines
 
 \\def\\greinitialformat#1{%
@@ -446,7 +468,7 @@ $initialFormat
 \\gdef\\grehighchoralsignstyle#1{{\\fontsize{8}{8}\\selectfont #1}}
 %\\def\\greabovelinestextstyle#1{\\hspace*{-5pt}\\small\\textit{#1}}
 % greinitialformat must be set before calling!
-\\def\\greinitialformat#1{{\\initial #1}}
+\\def\\greinitialformat#1{\\raisebox{{$initialraise}pt}{\\initial #1}}
 \\newlength{\\annotwidth}
 \\newlength{\\annottwowidth}
 \\newlength{\\spacewidth}

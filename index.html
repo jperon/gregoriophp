@@ -238,13 +238,20 @@ textarea,#chant-parent{
       <div>
       Font :
       <input type="checkbox" id="btnFont" /><label id="lblFont" for="btnFont">Libertine</label>
-      <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
-      <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+      <input type="checkbox" id="btnFontSize" /><label id="lblFontSize" for="btnFontSize">Font Size:<input type='text' value='12' id='txtFontSize' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
       </div>
       <div>
       Initial :
       <input type="checkbox" id="btnInitial" /><label id="lblInitial" for="btnInitial">Libertine</label>
-      <input type="checkbox" id="btnInitialSize" /><label id="lblInitialSize" for="btnInitialSize">Initial Size:<input type='text' value='36' id='txtInitialSize' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      <input type="checkbox" id="btnInitialSize" /><label id="lblInitialSize" for="btnInitialSize">Initial Size:<input type='text' value='36' id='txtInitialSize' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      <input type="checkbox" id="btnInitialRaise" /><label id="lblInitialRaise" for="btnInitialRaise">Initial Raise:<input type='text' value='0' id='txtInitialRaise' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      <input type="checkbox" id="btnAnnotRaise" /><label id="lblAnnotRaise" for="btnAnnotRaise">Annot. Raise:<input type='text' value='0' id='txtAnnotRaise' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      </div>
+      <div>
+      Notes :
+      <input type="checkbox" id="btnFactor" /><label id="lblFactor" for="btnFactor">Notes Size:<input type='text' value='17' id='txtFactor' maxlength='2' style='text-align:right;border:none;width:24px;background-color:transparent;'></label>
+      <input type="checkbox" id="btnSpaceLinesText" /><label id="lblSpaceLinesText" for="btnSpaceLinesText">Space above text:<input type='text' value='' id='txtSpaceLinesText' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      <input type="checkbox" id="btnSpaceBeneathText" /><label id="lblSpaceBeneathText" for="btnSpaceBeneathText">Space beneath text:<input type='text' value='' id='txtSpaceBeneathText' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
       </div>
       <div>
         <div>
@@ -324,6 +331,10 @@ textarea,#chant-parent{
 <input type="hidden" id="pdff_initial" value="LinLibertineO" name="initial"/>
 <input type="hidden" id="pdff_fontsize" value="12" name="fontsize"/>
 <input type="hidden" id="pdff_initialsize" value="36" name="initialsize"/>
+<input type="hidden" id="pdff_initialraise" value="0" name="initialraise"/>
+<input type="hidden" id="pdff_annotraise" value="0" name="annotraise"/>
+<input type="hidden" id="pdff_spacelinestext" value="" name="spacelinestext"/>
+<input type="hidden" id="pdff_spacebeneathtext" value="" name="spacebeneathtext"/>
 <input type="hidden" id="pdff_factor" value="17" name="factor"/>
 <input type="hidden" id="pdff_margin" value="12" name="margin"/>
 <input type="hidden" id="pdff_red" value="153" name="red"/>
@@ -337,7 +348,7 @@ gabcSettings.trimStaff=false;
 var gabcheader=null,
     selHeight=210,selWidth=148,selSpacing='',
     selFont='LinLibertineO',selFontSize=12,
-    selInitial='LinLibertineO',selInitialSize=36,
+    selInitial='LinLibertineO',selInitialSize=36,selInitialRaise=0,selAnnotRaise=0,
     selFactor=17,selMargin=12,
     selRed=153,selGreen=0,selBlue=0,
     overrideSpacing=false,
@@ -358,6 +369,10 @@ function updateBoth(){
     if(typeof(gabcheader.cValues.spacing)!='string') gabcheader.cValues.spacing = selSpacing;
     if(typeof(gabcheader.cValues.font)!='string') gabcheader.cValues.font = selFontSize;
     if(typeof(gabcheader.cValues.initial)!='string') gabcheader.cValues.initial = selInitialSize;
+    if(typeof(gabcheader.cValues.initialraise)!='string') gabcheader.cValues.initialraise = selInitialRaise;
+    if(typeof(gabcheader.cValues.annotraise)!='string') gabcheader.cValues.annotraise = selAnnotRaise;
+    if(typeof(gabcheader.cValues.spacelinestext)!='string') gabcheader.cValues.spacelinestext = selSpaceLinesText;
+    if(typeof(gabcheader.cValues.spacebeneathtext)!='string') gabcheader.cValues.spacebeneathtext = selSpaceBeneathText;
     if(typeof(gabcheader.cValues.factor)!='string') gabcheader.cValues.factor = selFactor;
     if(typeof(gabcheader.cValues.margin)!='string') gabcheader.cValues.margin = selMargin;
     if(typeof(gabcheader.cValues.red)!='string') gabcheader.cValues.red = selRed;
@@ -479,6 +494,22 @@ function updateBoth(){
   if(typeof(gabcheader.cValues.initialsize)=='string' && gabcheader.cValues.initialsize != selInitialSize && parseFloat(gabcheader.cValues.initialsize)) {
     selInitialSize = gabcheader.cValues.initialsize;
     $("#txtInitialSize,#imgf_initialsize,#pdff_initialsize").val(selInitialSize);
+  }
+  if(typeof(gabcheader.cValues.initialraise)=='string' && gabcheader.cValues.initialraise != selInitialRaise && parseFloat(gabcheader.cValues.initialraise)) {
+    selInitialRaise = gabcheader.cValues.initialraise;
+    $("#txtInitialRaise,#imgf_initialraise,#pdff_initialraise").val(selInitialRaise);
+  }
+  if(typeof(gabcheader.cValues.annotraise)=='string' && gabcheader.cValues.commentrais != selAnnotRaise && parseFloat(gabcheader.cValues.annotraise)) {
+    selAnnotRaise = gabcheader.cValues.annotraise;
+    $("#txtAnnotRaise,#imgf_annotraise,#pdff_annotraise").val(selAnnotRaise);
+  }
+  if(typeof(gabcheader.cValues.spacelinestext)=='string' && gabcheader.cValues.spacelinestext != selSpaceLinesText && parseFloat(gabcheader.cValues.spacelinestext)) {
+    selSpaceLinesText = gabcheader.cValues.spacelinestext;
+    $("#txtSpaceLinesText,#imgf_spacelinestext,#pdff_spacelinestext").val(selSpaceLinesText);
+  }
+  if(typeof(gabcheader.cValues.spacebeneathtext)=='string' && gabcheader.cValues.spacebeneathtext != selSpaceBeneathText && parseFloat(gabcheader.cValues.spacebeneathtext)) {
+    selSpaceBeneathText = gabcheader.cValues.spacebeneathtext;
+    $("#txtSpaceBeneathText,#imgf_spacebeneathtext,#pdff_spacebeneathtext").val(selSpaceBeneathText);
   }
   if(typeof(gabcheader.cValues.factor)=='string' && gabcheader.cValues.factor != selFactor && parseFloat(gabcheader.cValues.factor)) {
     selFactor = gabcheader.cValues.factor;
@@ -609,7 +640,11 @@ GabcJob.prototype.run = function(){
     font:typeof(this.header.cValues.font)=='string'? this.header.cValues.font : selFont,
     fontsize:typeof(this.header.cValues.fontsize)=='string'? this.header.cValues.fontsize : selFont,
     initial:typeof(this.header.cValues.initial)=='string'? this.header.cValues.initial : selInitial,
-    initialsize:typeof(this.header.cValues.initialsize)=='string'? this.header.cValues.initialsize : selInitial,
+    initialsize:typeof(this.header.cValues.initialsize)=='string'? this.header.cValues.initialsize : selInitialSize,
+    initialraise:typeof(this.header.cValues.initialraise)=='string'? this.header.cValues.initialraise : selInitialRaise,
+    annotraise:typeof(this.header.cValues.annotraise)=='string'? this.header.cValues.annotraise : selAnnotRaise,
+    spacelinestext:typeof(this.header.cValues.spacelinestext)=='string'? this.header.cValues.spacelinestext : selSpaceLinesText,
+    spacebeneathtext:typeof(this.header.cValues.spacebeneathtext)=='string'? this.header.cValues.spacebeneathtext : selSpaceBeneathText,
     factor:typeof(this.header.cValues.factor)=='string'? this.header.cValues.factor : selFactor,
     margin:typeof(this.header.cValues.margin)=='string'? this.header.cValues.margin : selMargin,
     red:typeof(this.header.cValues.red)=='string'? this.header.cValues.red : selRed,
@@ -888,6 +923,46 @@ function initialSizeKeyUp(e) {
   $("#imgf_initialsize,#pdff_initialsize").val(selInitialSize);
 }
 
+function initialRaiseKeyUp(e) {
+  var val = selInitialRaise = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.initialraise != val){
+    gabcheader.cValues.initialraise = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_initialraise,#pdff_initialraise").val(selInitialRaise);
+}
+
+function commentRaiseKeyUp(e) {
+  var val = selAnnotRaise = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.annotraise != val){
+    gabcheader.cValues.annotraise = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_annotraise,#pdff_annotraise").val(selAnnotRaise);
+}
+
+function spaceLinesTextKeyUp(e) {
+  var val = selSpaceLinesText = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.spacelinestext != val){
+    gabcheader.cValues.spacelinestext = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_spacelinestext,#pdff_spacelinestext").val(selSpaceLinesText);
+}
+
+function spaceBeneathTextKeyUp(e) {
+  var val = selSpaceBeneathText = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.spacebeneathtext != val){
+    gabcheader.cValues.spacebeneathtext = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_spacebeneathtext,#pdff_spacebeneathtext").val(selSpaceBeneathText);
+}
+
 function factorKeyUp(e) {
   var val = selFactor = $(this).val();
   gabcheader = gabcheader || getHeader($("#editor").val());
@@ -1083,7 +1158,7 @@ $(function() {
   $("#radioSpacing,#radioWidth,#radioHeight").buttonset();
   $("#radioFont").buttonsetv();
   $("#radioInitial").buttonsetv();
-  $("#btnSpacing,#btnFont,#btnFontSize,#btnInitial,#btnInitialSize,#btnFactor,#btnMargin,#btnRed,#btnGreen,#btnBlue,#btnWidth,#btnHeight").button({create:windowResized});
+  $("#btnSpacing,#btnFont,#btnFontSize,#btnInitial,#btnInitialSize,#btnInitialRaise,,#btnAnnotRaise,#btnSpaceLinesText,#btnSpaceBeneathText,#btnFactor,#btnMargin,#btnRed,#btnGreen,#btnBlue,#btnWidth,#btnHeight").button({create:windowResized});
   $("#chant-parent2").resizable({handles:"e"});
   if(location.protocol.slice(0,4) != "http" ||
      !location.hostname.match(/(?:www\.)?(?:illuminarepublications|sacredmusicproject)\.com/i)
@@ -1111,6 +1186,10 @@ $(function() {
   $("#btnSpacing,#btnFont,#btnInitial,#btnWidth,#btnHeight,#lblSpacing,#lblFont,#lblInitial,#lblWidth,#lblHeight").mouseenter(showRadio).mouseleave(hideRadio).change(overrideChanged);
   $("#btnFontSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFontSize').focus()});
   $("#btnInitialSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtInitialSize').focus()});
+  $("#btnInitialRaise").change(function(e){this.checked=false;$(this).button('refresh');$('#txtInitialRaise').focus()});
+  $("#btnAnnotRaise").change(function(e){this.checked=false;$(this).button('refresh');$('#txtAnnotRaise').focus()});
+  $("#btnSpaceLinesText").change(function(e){this.checked=false;$(this).button('refresh');$('#txtSpaceLinesText').focus()});
+  $("#btnSpaceBeneathText").change(function(e){this.checked=false;$(this).button('refresh');$('#txtSpaceBeneathText').focus()});
   $("#btnFactor").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFactor').focus()});
   $("#btnMargin").change(function(e){this.checked=false;$(this).button('refresh');$('#txtMargin').focus()});
   $("#btnRed").change(function(e){this.checked=false;$(this).button('refresh');$('#txtRed').focus()});
@@ -1118,6 +1197,10 @@ $(function() {
   $("#btnBlue").change(function(e){this.checked=false;$(this).button('refresh');$('#txtBlue').focus()});
   $("#txtFontSize").keyup(fontSizeKeyUp).keyup();
   $("#txtInitialSize").keyup(initialSizeKeyUp).keyup();
+  $("#txtInitialRaise").keyup(initialRaiseKeyUp).keyup();
+  $("#txtAnnotRaise").keyup(commentRaiseKeyUp).keyup();
+  $("#txtSpaceLinesText").keyup(spaceLinesTextKeyUp).keyup();
+  $("#txtSpaceBeneathText").keyup(spaceBeneathTextKeyUp).keyup();
   $("#txtFactor").keyup(factorKeyUp).keyup();
   $("#txtMargin").keyup(marginKeyUp).keyup();
   $("#txtRed").keyup(redKeyUp).keyup();
