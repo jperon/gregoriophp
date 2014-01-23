@@ -225,12 +225,13 @@ if($gabc=='') {
         ),
         $annotation
       );
+      $annotsize = 4*$size/5;
       $annotation = "{\\rubrumann $annotation}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotation);
-        $annothelper = "{\\footnotesize {$upperAnnot}$annotsuffix}";
+        $annothelper = "{\\fontsize{{$annotsize}}{{$annotsize}}\\selectfont {$upperAnnot}$annotsuffix}";
       } else {
-        $annothelper = "{\\footnotesize\\textsc{{$annotation}}$annotsuffix}";
+        $annothelper = "{\\fontsize{{$annotsize}}{{$annotsize}}\\selectfont\\textsc{{$annotation}}$annotsuffix}";
       }
       $annotcmd = "\\def\\annot{\\raisebox{{$annotraise}pt}[1.2ex][1ex]{{$annothelper}}}";
     } else {
@@ -253,9 +254,9 @@ if($gabc=='') {
       $annotationTwo = "{\\rubrumann $annotationTwo}";
       if($font == 'Georgia') {
         $upperAnnot = strtoupper($annotationTwo);
-        $annothelperTwo = "{\\footnotesize {$upperAnnot}$annotsuffix}";
+        $annothelperTwo = "{\\fontsize{{$annotsize}}{{$annotsize}}\\selectfont {$upperAnnot}$annotsuffix}";
       } else {
-        $annothelperTwo = "{\\footnotesize\\textsc{{$annotationTwo}}$annotsuffix}";
+        $annothelperTwo = "{\\fontsize{{$annotsize}}{{$annotsize}}\\selectfont\\textsc{{$annotationTwo}}$annotsuffix}";
       }
       //$annotcmd .= "\\gresetsecondlineaboveinitial{{$annothelperTwo}}{{$annothelperTwo}}";
       $annotcmd .= "\\def\\annottwo{\\raisebox{{$annotraise}pt}[1.2ex][1ex]{{$annothelperTwo}}}";
