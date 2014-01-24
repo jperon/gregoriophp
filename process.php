@@ -233,7 +233,7 @@ if($gabc=='') {
       } else {
         $annothelper = "{\\fontsize{{$annotsize}}{{$annotsize}}\\selectfont\\textsc{{$annotation}}$annotsuffix}";
       }
-      $annotcmd = "\\def\\annot{\\raisebox{{$annotraise}pt}[1.2ex][1ex]{{$annothelper}}}";
+      $annotcmd = "\\def\\annot{\\raisebox{{$annotraise}pt}[1.2\\height][1ex]{{$annothelper}}}";
     } else {
       $annotcmd = "\\def\\annot{}";
     }
@@ -259,7 +259,7 @@ if($gabc=='') {
         $annothelperTwo = "{\\fontsize{{$annotsize}}{{$annotsize}}\\selectfont\\textsc{{$annotationTwo}}$annotsuffix}";
       }
       //$annotcmd .= "\\gresetsecondlineaboveinitial{{$annothelperTwo}}{{$annothelperTwo}}";
-      $annotcmd .= "\\def\\annottwo{\\raisebox{{$annotraise}pt}[1.2ex][1ex]{{$annothelperTwo}}}";
+      $annotcmd .= "\\def\\annottwo{\\raisebox{{$annotraise}pt}[1.2\\height][1ex]{{$annothelperTwo}}}";
     } else {
       $annotcmd .= "\\def\\annottwo{}";
     }
