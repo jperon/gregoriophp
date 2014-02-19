@@ -11,6 +11,8 @@ $initialfont=$_REQUEST['initial'];
 $initialsize=$_REQUEST['initialsize'];
 $initialraise=$_REQUEST['initialraise'];
 $annotraise=$_REQUEST['annotraise'];
+$binitialspace=$_REQUEST['binitialspace'];
+$ainitialspace=$_REQUEST['ainitialspace'];
 $spacelinestext=$_REQUEST['spacelinestext'];
 $spacebeneathtext=$_REQUEST['spacebeneathtext'];
 $factor=$_REQUEST['factor'];
@@ -209,7 +211,9 @@ if($gabc=='') {
     if($annotationTwo == $annotation) {
       $annotationTwo = '';
     }
-    $titlecmd = $header['name'] == ''? '' : "\\begin{center}\\begin{huge}\\rubrumtit\\textsc{{$header['name']}}\\end{huge}\\end{center}\\bigskip";
+    //$titlecmd = $header['name'] == ''? '' : "\\begin{center}\\begin{huge}\\rubrumtit\\textsc{{$header['name']}}\\end{huge}\\end{center}\\bigskip";
+    $bigsize = 1.7*$size;
+    $titlecmd = $header['name'] == ''? '' : "\\begin{center}{\\fontsize{{$bigsize}}{{$bigsize}}\\selectfont\\rubrumtit\\textsc{{$header['name']}}}\\end{center}\\bigskip";
     $annotcmd = '';
     if($annotation) {
       $annotsuffix='';
@@ -374,6 +378,20 @@ if($annotraise==''){
   } else {
     $grespacebeneathtext = "";
   }
+  if($binitialspace != "") {
+    $beforeinitialspace="\\GreSetSpaceBeforeInitial{{$binitialspace}pt}";
+    $beforeannotspace="\\hspace{{$binitialspace}pt}\\hspace{-\\spacewidth}";
+  } else {
+    $beforeinitialspace="";
+    $beforeannotspace="";
+  }
+  if($ainitialspace != "") {
+    $afterinitialspace="\\GreSetSpaceAfterInitial{{$ainitialspace}pt}";
+    $afterannotspace="\\hspace{{$ainitialspace}pt}\\hspace{-\\spacewidth}";
+  } else {
+    $afterinitialspace="";
+    $afterannotspace="";
+  }
   $handle = fopen($nametex, 'w');
   fwrite($handle, <<<EOF
 \\documentclass[10pt]{article}
@@ -491,12 +509,12 @@ $initialFormat
 \\addtolength{\\spacewidth}{-\\initwidth}
 \\setlength{\\spacewidth}{0.5\\spacewidth}
 %
-\\GreSetSpaceBeforeInitial{\\spacewidth}
-\\GreSetSpaceAfterInitial{\\spacewidth}
+\\GreSetSpaceBeforeInitial{\\spacewidth}{$beforeinitialspace}
+\\GreSetSpaceAfterInitial{\\spacewidth}{$afterinitialspace}
 %
-\\gresetfirstannotation{\\annot}
+\\gresetfirstannotation{{$beforeannotspace}\\annot{$afterannotspace}}
 \\ifx\\annottwo\\undefined\\else%
-\\gresetsecondannotation{\\annottwo}
+\\gresetsecondannotation{{$beforeannotspace}\\annottwo{$afterannotspace}}
 \\fi
 }
 $includeScores

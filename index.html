@@ -252,6 +252,8 @@ textarea,#chant-parent{
       <input type="checkbox" id="btnSpaceLinesText" /><label id="lblSpaceLinesText" for="btnSpaceLinesText">Above Text:<input type='text' value='' id='txtSpaceLinesText' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
       <input type="checkbox" id="btnSpaceBeneathText" /><label id="lblSpaceBeneathText" for="btnSpaceBeneathText">Beneath Text:<input type='text' value='' id='txtSpaceBeneathText' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
       <input type="checkbox" id="btnAnnotRaise" /><label id="lblAnnotRaise" for="btnAnnotRaise">Annot. Raise:<input type='text' value='0' id='txtAnnotRaise' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      <input type="checkbox" id="btnBInitialSpace" /><label id="lblBInitialSpace" for="btnBInitialSpace">Before Initial:<input type='text' value='' id='txtBInitialSpace' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
+      <input type="checkbox" id="btnAInitialSpace" /><label id="lblAInitialSpace" for="btnAInitialSpace">After Initial:<input type='text' value='' id='txtAInitialSpace' maxlength='4' style='text-align:right;border:none;width:24px;background-color:transparent;'>pt</label>
       </div>
       <div>
         <div>
@@ -332,6 +334,8 @@ textarea,#chant-parent{
 <input type="hidden" id="pdff_fontsize" value="12" name="fontsize"/>
 <input type="hidden" id="pdff_initialsize" value="36" name="initialsize"/>
 <input type="hidden" id="pdff_initialraise" value="0" name="initialraise"/>
+<input type="hidden" id="pdff_binitialspace" value="" name="binitialspace"/>
+<input type="hidden" id="pdff_ainitialspace" value="" name="ainitialspace"/>
 <input type="hidden" id="pdff_annotraise" value="0" name="annotraise"/>
 <input type="hidden" id="pdff_spacelinestext" value="" name="spacelinestext"/>
 <input type="hidden" id="pdff_spacebeneathtext" value="" name="spacebeneathtext"/>
@@ -370,6 +374,8 @@ function updateBoth(){
     if(typeof(gabcheader.cValues.font)!='string') gabcheader.cValues.font = selFontSize;
     if(typeof(gabcheader.cValues.initial)!='string') gabcheader.cValues.initial = selInitialSize;
     if(typeof(gabcheader.cValues.initialraise)!='string') gabcheader.cValues.initialraise = selInitialRaise;
+    if(typeof(gabcheader.cValues.binitialspace)!='string') gabcheader.cValues.binitialspace = selBInitialSpace;
+    if(typeof(gabcheader.cValues.ainitialspace)!='string') gabcheader.cValues.ainitialspace = selAInitialSpace;
     if(typeof(gabcheader.cValues.annotraise)!='string') gabcheader.cValues.annotraise = selAnnotRaise;
     if(typeof(gabcheader.cValues.spacelinestext)!='string') gabcheader.cValues.spacelinestext = selSpaceLinesText;
     if(typeof(gabcheader.cValues.spacebeneathtext)!='string') gabcheader.cValues.spacebeneathtext = selSpaceBeneathText;
@@ -498,6 +504,14 @@ function updateBoth(){
   if(typeof(gabcheader.cValues.initialraise)=='string' && gabcheader.cValues.initialraise != selInitialRaise && parseFloat(gabcheader.cValues.initialraise)) {
     selInitialRaise = gabcheader.cValues.initialraise;
     $("#txtInitialRaise,#imgf_initialraise,#pdff_initialraise").val(selInitialRaise);
+  }
+  if(typeof(gabcheader.cValues.binitialspace)=='string' && gabcheader.cValues.binitialspace != selBInitialSpace && parseFloat(gabcheader.cValues.binitialspace)) {
+    selBInitialSpace = gabcheader.cValues.binitialspace;
+    $("#txtBInitialSpace,#imgf_binitialspace,#pdff_binitialspace").val(selBInitialSpace);
+  }
+  if(typeof(gabcheader.cValues.ainitialspace)=='string' && gabcheader.cValues.ainitialspace != selAInitialSpace && parseFloat(gabcheader.cValues.ainitialspace)) {
+    selAInitialSpace = gabcheader.cValues.ainitialspace;
+    $("#txtAInitialSpace,#imgf_ainitialspace,#pdff_ainitialspace").val(selAInitialSpace);
   }
   if(typeof(gabcheader.cValues.annotraise)=='string' && gabcheader.cValues.commentrais != selAnnotRaise && parseFloat(gabcheader.cValues.annotraise)) {
     selAnnotRaise = gabcheader.cValues.annotraise;
@@ -642,6 +656,8 @@ GabcJob.prototype.run = function(){
     initial:typeof(this.header.cValues.initial)=='string'? this.header.cValues.initial : selInitial,
     initialsize:typeof(this.header.cValues.initialsize)=='string'? this.header.cValues.initialsize : selInitialSize,
     initialraise:typeof(this.header.cValues.initialraise)=='string'? this.header.cValues.initialraise : selInitialRaise,
+    binitialspace:typeof(this.header.cValues.binitialspace)=='string'? this.header.cValues.binitialspace : selBInitialSpace,
+    ainitialspace:typeof(this.header.cValues.ainitialspace)=='string'? this.header.cValues.ainitialspace : selAInitialSpace,
     annotraise:typeof(this.header.cValues.annotraise)=='string'? this.header.cValues.annotraise : selAnnotRaise,
     spacelinestext:typeof(this.header.cValues.spacelinestext)=='string'? this.header.cValues.spacelinestext : selSpaceLinesText,
     spacebeneathtext:typeof(this.header.cValues.spacebeneathtext)=='string'? this.header.cValues.spacebeneathtext : selSpaceBeneathText,
@@ -933,6 +949,26 @@ function initialRaiseKeyUp(e) {
   $("#imgf_initialraise,#pdff_initialraise").val(selInitialRaise);
 }
 
+function bInitialSpaceKeyUp(e) {
+  var val = selBInitialSpace = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.binitialspace != val){
+    gabcheader.cValues.binitialspace = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_binitialspace,#pdff_binitialspace").val(selBInitialSpace);
+}
+
+function aInitialSpaceKeyUp(e) {
+  var val = selAInitialSpace = $(this).val();
+  gabcheader = gabcheader || getHeader($("#editor").val());
+  if(gabcheader.cValues.ainitialspace != val){
+    gabcheader.cValues.ainitialspace = val;
+    updateEditorHeader(gabcheader);
+  }
+  $("#imgf_ainitialspace,#pdff_ainitialspace").val(selAInitialSpace);
+}
+
 function commentRaiseKeyUp(e) {
   var val = selAnnotRaise = $(this).val();
   gabcheader = gabcheader || getHeader($("#editor").val());
@@ -1158,7 +1194,7 @@ $(function() {
   $("#radioSpacing,#radioWidth,#radioHeight").buttonset();
   $("#radioFont").buttonsetv();
   $("#radioInitial").buttonsetv();
-  $("#btnSpacing,#btnFont,#btnFontSize,#btnInitial,#btnInitialSize,#btnInitialRaise,,#btnAnnotRaise,#btnSpaceLinesText,#btnSpaceBeneathText,#btnFactor,#btnMargin,#btnRed,#btnGreen,#btnBlue,#btnWidth,#btnHeight").button({create:windowResized});
+  $("#btnSpacing,#btnFont,#btnFontSize,#btnInitial,#btnInitialSize,#btnInitialRaise,#btnBInitialSpace,#btnAInitialSpace,#btnAnnotRaise,#btnSpaceLinesText,#btnSpaceBeneathText,#btnFactor,#btnMargin,#btnRed,#btnGreen,#btnBlue,#btnWidth,#btnHeight").button({create:windowResized});
   $("#chant-parent2").resizable({handles:"e"});
   if(location.protocol.slice(0,4) != "http" ||
      !location.hostname.match(/(?:www\.)?(?:illuminarepublications|sacredmusicproject)\.com/i)
@@ -1187,6 +1223,8 @@ $(function() {
   $("#btnFontSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtFontSize').focus()});
   $("#btnInitialSize").change(function(e){this.checked=false;$(this).button('refresh');$('#txtInitialSize').focus()});
   $("#btnInitialRaise").change(function(e){this.checked=false;$(this).button('refresh');$('#txtInitialRaise').focus()});
+  $("#btnBInitialSpace").change(function(e){this.checked=false;$(this).button('refresh');$('#txtBInitialSpace').focus()});
+  $("#btnAInitialSpace").change(function(e){this.checked=false;$(this).button('refresh');$('#txtAInitialSpace').focus()});
   $("#btnAnnotRaise").change(function(e){this.checked=false;$(this).button('refresh');$('#txtAnnotRaise').focus()});
   $("#btnSpaceLinesText").change(function(e){this.checked=false;$(this).button('refresh');$('#txtSpaceLinesText').focus()});
   $("#btnSpaceBeneathText").change(function(e){this.checked=false;$(this).button('refresh');$('#txtSpaceBeneathText').focus()});
@@ -1198,6 +1236,8 @@ $(function() {
   $("#txtFontSize").keyup(fontSizeKeyUp).keyup();
   $("#txtInitialSize").keyup(initialSizeKeyUp).keyup();
   $("#txtInitialRaise").keyup(initialRaiseKeyUp).keyup();
+  $("#txtBInitialSpace").keyup(bInitialSpaceKeyUp).keyup();
+  $("#txtAInitialSpace").keyup(aInitialSpaceKeyUp).keyup();
   $("#txtAnnotRaise").keyup(commentRaiseKeyUp).keyup();
   $("#txtSpaceLinesText").keyup(spaceLinesTextKeyUp).keyup();
   $("#txtSpaceBeneathText").keyup(spaceBeneathTextKeyUp).keyup();
