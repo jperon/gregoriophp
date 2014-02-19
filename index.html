@@ -292,12 +292,14 @@ textarea,#chant-parent{
       <input type="radio" name="rbWidth" value="105" id="rbWidth4"/><label for="rbWidth4">A6</label>
       <input type="radio" name="rbWidth" value="148" checked id="rbWidth45"/><label for="rbWidth45">A5</label>
       <input type="radio" name="rbWidth" value="210" id="rbWidth5"/><label for="rbWidth5">A4</label>
+      <input type="radio" name="rbWidth" value="297" id="rbWidth55"/><label for="rbWidth55">A3</label>
       <input type="radio" name="rbWidth" value="custom" id="rbWidthCustom"/><label for="rbWidthCustom"><input type="text" class='txtbox' size="3" id="txtWidth" value=""/><label for="txtWidth">mm</label></label>
     </div>
     <div id="radioHeight" style="display:none;position:absolute">
       <input type="radio" name="rbHeight" value="148" id="rbHeight9"/><label for="rbHeight9">A6</label>
       <input type="radio" name="rbHeight" value="210" checked id="rbHeight11"/><label for="rbHeight11">A5</label>
       <input type="radio" name="rbHeight" value="297" id="rbHeight13"/><label for="rbHeight13">A4</label>
+      <input type="radio" name="rbHeight" value="420" id="rbHeight15"/><label for="rbHeight15">A3</label>
       <input type="radio" name="rbHeight" value="custom" id="rbHeightCustom"/><label for="rbHeightCustom"><input type="text" class='txtbox' size="3" id="txtHeight" value=""/><label for="txtWidth">mm</label></label>
     </div>
     <div class="tap"><textarea id="editor" spellcheck="false">user-notes:;&#10;commentary:;&#10;annotation:;&#10;centering-scheme:latin;&#10;%%&#10;(c4)</textarea></div>
@@ -413,6 +415,11 @@ function updateBoth(){
         $("#rbWidth45").button("refresh");
         selWidth = val;
         break;
+      case 297:
+        $("#rbWidth55")[0].checked = true;
+        $("#rbWidth55").button("refresh");
+        selWidth = val;
+        break;
       default:
         if(val) {
           $("#rbWidthCustom")[0].checked = true;
@@ -440,6 +447,11 @@ function updateBoth(){
       case 297:
         $("#rbHeight13")[0].checked = true;
         $("#rbHeight13").button("refresh");
+        selHeight = val;
+        break;
+      case 420:
+        $("#rbHeight15")[0].checked = true;
+        $("#rbHeight15").button("refresh");
         selHeight = val;
         break;
       default:
@@ -751,7 +763,8 @@ function widthChanged(width,forceUpdateGabc){
     $("#rbWidth4")[0].checked? 105 :
     $("#rbWidth5")[0].checked? 210 :
     $("#rbWidth45")[0].checked? 148 :
-    parseFloat($("#txtWidth").val()) || 5;
+    $("#rbWidth55")[0].checked? 297 :
+    parseFloat($("#txtWidth").val()) || 210;
   selWidth= val;
   gabcheader = gabcheader || getHeader($("#editor").val());
   if(gabcheader.cValues.width != val && (forceUpdateGabc || width!=selWidth)) {
@@ -771,6 +784,7 @@ function heightChanged(height,forceUpdateGabc){
     $("#rbHeight9")[0].checked? 148 :
     $("#rbHeight11")[0].checked? 210 :
     $("#rbHeight13")[0].checked? 297 :
+    $("#rbHeight15")[0].checked? 420 :
     parseFloat($("#txtHeight").val()) || 297;
   selHeight=val;
   gabcheader = gabcheader || getHeader($("#editor").val());
