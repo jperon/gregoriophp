@@ -412,7 +412,7 @@ $usefont
 \\pagestyle{empty}
 \\begin{document}
 $setmainfont%
-\\newfontfamily\\versiculum{Versiculum}
+%\\newfontfamily\\versiculum{Versiculum}
 \\font\\initial={$initialfont} at {$initialsize}pt
 \\gresetstafflinefactor{13}
 $grespacelinestext
