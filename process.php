@@ -10,7 +10,7 @@ $size=$_REQUEST['fontsize'];
 $initialfont=$_REQUEST['initial'];
 $initialsize=$_REQUEST['initialsize'];
 $initialraise=$_REQUEST['initialraise'];
-$annotraise=$_REQUEST['annotraise'];
+$annotraise=$_REQUEST['annotraise'];if($annotraise==''){$annotraise=0;}
 $binitialspace=$_REQUEST['binitialspace'];
 $ainitialspace=$_REQUEST['ainitialspace'];
 $spacelinestext=$_REQUEST['spacelinestext'];
@@ -213,7 +213,7 @@ if($gabc=='') {
     }
     //$titlecmd = $header['name'] == ''? '' : "\\begin{center}\\begin{huge}\\rubrumtit\\textsc{{$header['name']}}\\end{huge}\\end{center}\\bigskip";
     $bigsize = 1.7*$size;
-    $titlecmd = $header['name'] == ''? '' : "\\begin{center}{\\fontsize{{$bigsize}}{{$bigsize}}\\selectfont\\rubrumtit\\textsc{{$header['name']}}}\\end{center}\\bigskip";
+    $titlecmd = $header['name'] == ''? '' : "\\vspace{1\\baselineskip}\\needspace{.2\\paperheight}\\begin{center}{\\fontsize{{$bigsize}}{{$bigsize}}\\selectfont\\rubrumtit\\textsc{{$header['name']}}}\\end{center}\\bigskip";
     $annotcmd = '';
     if($annotation) {
       $annotsuffix='';
@@ -319,9 +319,6 @@ if($initialsize==''){
 if($initialraise==''){
     $initialraise=0;
 }
-if($annotraise==''){
-    $annotraise=0;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // Write out a template main.tex file that includes the score just outputted.
@@ -405,6 +402,7 @@ $rubrumann
 $rubrumcom
 $rubrumlet
 \\usepackage{gregoriotex}
+\\usepackage{needspace}
 \\usepackage[utf8]{luainputenc}
 \\usepackage{fontspec}
 $usefont
